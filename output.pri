@@ -1,7 +1,7 @@
 
 CONFIG(debug, debug|release) {
-    DLLDESTDIR = $$PWD/../build_debug_output
+    DLLDESTDIR = $$PWD/../Qters_debug/output
 }
 CONFIG(release, debug|release) {
-    DLLDESTDIR = $$PWD/../build_release_output
+    DLLDESTDIR = $$PWD/../Qters_release/output
 }

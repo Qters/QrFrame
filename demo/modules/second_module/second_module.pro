@@ -2,7 +2,7 @@ QT       += core
 
 DEFINES += SECOND_MODULE_LIBRARY
 
-TARGET = second_module
+TARGET = frame_demo_second_module
 
 include($$PWD/../modules.pri)
 

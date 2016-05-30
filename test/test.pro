@@ -9,14 +9,14 @@ QR_FRAME_PRO = $$PWD/../source
 
 CONFIG(debug, debug|release) {
     LIBS += \
-        -L$$QR_TEST_PRO/../../build_debug_qrtest/ -lQrTestd \
-        -L$$QR_FRAME_PRO/../../build_debug_qrframe/ -lQrFramed \
+        -L$$QR_TEST_PRO/../../Qters_debug/qrtest/ -lQrTestd \
+        -L$$QR_FRAME_PRO/../../Qters_debug/qrframe/ -lQrFramed \
 }
 
 CONFIG(release, debug|release) {
     LIBS += \
-        -L$$QR_TEST_PRO/../../build_release_qrtest/ -lQrTest \
-        -L$$QR_FRAME_PRO/../../build_release_qrframe/ -lQrFrame \
+        -L$$QR_TEST_PRO/../../Qters_release/qrtest/ -lQrTest \
+        -L$$QR_FRAME_PRO/../../Qters_release/qrframe/ -lQrFrame \
 }
 
 INCLUDEPATH += \

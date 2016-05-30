@@ -4,10 +4,10 @@ include($$PWD/../demo.pri)
 TEMPLATE = lib
 
 CONFIG(debug, debug|release) {
-    DESTDIR = $$QR_FRAME_PRO/../../build_debug_output/modules
-    DLLDESTDIR = $$QR_FRAME_PRO/../../build_debug_qrframe/modules
+    DESTDIR = $$QR_FRAME_PRO/../../Qters_debug/qrframe/modules
+    DLLDESTDIR = $$QR_FRAME_PRO/../../Qters_debug/output/modules
 }
 CONFIG(release, debug|release) {
-    DESTDIR = $$QR_FRAME_PRO/../../build_release_output/modules
-    DLLDESTDIR = $$QR_FRAME_PRO/../../build_release_qrframe/modules
+    DESTDIR = $$QR_FRAME_PRO/../../Qters_release/output/modules
+    DLLDESTDIR = $$QR_FRAME_PRO/../../Qters_release/qrframe/modules
 }

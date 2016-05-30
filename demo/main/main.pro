@@ -6,10 +6,10 @@ TEMPLATE = app
 include($$PWD/../demo.pri)
 
 CONFIG(debug, debug|release) {
-    DESTDIR = $$QR_FRAME_PRO/../../build_debug_output
+    DESTDIR = $$QR_FRAME_PRO/../../Qters_debug/output
 }
 CONFIG(release, debug|release) {
-    DESTDIR = $$QR_FRAME_PRO/../../build_release_output
+    DESTDIR = $$QR_FRAME_PRO/../../Qters_release/output
 }
 
 INCLUDEPATH += \

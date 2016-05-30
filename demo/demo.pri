@@ -1,17 +1,16 @@
 
 include($$PWD/../config.pri)
-include($$PWD/../output.pri)
 
 QR_FRAME_PRO = $$PWD/../source
 
 CONFIG(debug, debug|release) {
     LIBS += \
-        -L$$QR_FRAME_PRO/../../build_debug_qrframe/ -lQrFramed \
+        -L$$QR_FRAME_PRO/../../Qters_debug/qrframe/ -lQrFramed \
 }
 
 CONFIG(release, debug|release) {
     LIBS += \
-        -L$$QR_FRAME_PRO/../../build_release_qrframe/ -lQrFrame \
+        -L$$QR_FRAME_PRO/../../Qters_release/qrframe/ -lQrFrame \
 }
 
 INCLUDEPATH += \

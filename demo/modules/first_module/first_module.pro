@@ -2,7 +2,7 @@ QT       += core
 
 DEFINES += FIRST_MODULE_LIBRARY
 
-TARGET = first_module
+TARGET = frame_demo_first_module
 
 include($$PWD/../modules.pri)
 

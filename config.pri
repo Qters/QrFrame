@@ -7,22 +7,22 @@ CONFIG(debug, debug|release) {
     unix: TARGET = $$join(TARGET,,,_debug)
     else: TARGET = $$join(TARGET,,,d)
 
-    DESTDIR = $$PWD/../build_debug_qrframe
+    DESTDIR = $$PWD/../Qters_debug/qrframe
 }
 CONFIG(release, debug|release) {
-    DESTDIR = $$PWD/../build_release_qrframe
+    DESTDIR = $$PWD/../Qters_release/qrframe
 }
 
 CONFIG(debug, debug|release) {
     LIBS += \
-        -L$$QR_COMMON_PRO/../../build_debug_qrcommon/ -lQrCommond \
-        -L$$QR_ORM_PRO/../../build_debug_qrorm/ -lQrOrmd \
-        -L$$QR_LOGGER_PRO/../build_debug_qrlogger/ -lQrLoggerd \
+        -L$$QR_COMMON_PRO/../../Qters_debug/qrcommon/ -lQrCommond \
+        -L$$QR_ORM_PRO/../../Qters_debug/qrorm/ -lQrOrmd \
+        -L$$QR_LOGGER_PRO/../Qters_debug/qrlogger/ -lQrLoggerd \
 }
 CONFIG(release, debug|release) {
     LIBS += \
-        -L$$QR_COMMON_PRO/../../build_release_qrcommon/ -lQrCommon \
-        -L$$QR_LOGGER_PRO/../build_release_qrlogger/ -QrLogger \
+        -L$$QR_COMMON_PRO/../../Qters_release/qrcommon/ -lQrCommon \
+        -L$$QR_LOGGER_PRO/../Qters_release/qrlogger/ -QrLogger \
 }
 INCLUDEPATH += \
     $$QR_COMMON_PRO/include \
