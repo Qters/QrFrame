@@ -10,7 +10,7 @@ class SECONDMODULESHARED_EXPORT SecondModule : public QObject, public Qters::QrF
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "com.qters.qrframe.qrmoduleinterface.second" FILE "secondmodule.json")
-    Q_INTERFACES(QrModuleInterface)
+    Q_INTERFACES(Qters::QrFrame::QrModuleInterface)
 
     // QrModuleInterface interface
 public:
