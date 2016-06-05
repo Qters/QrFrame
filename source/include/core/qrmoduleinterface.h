@@ -35,9 +35,7 @@ public:
 
 }   //  namespace Qters
 
-QT_BEGIN_NAMESPACE
-    #define QrModuleInterface_iid "com.qters.qrframe.qrmoduleinterface"
-    Q_DECLARE_INTERFACE(Qters::QrFrame::QrModuleInterface, QrModuleInterface_iid)
-QT_END_NAMESPACE
+#define QrModuleInterface_iid "com.qters.qrframe.qrmoduleinterface"
+Q_DECLARE_INTERFACE(Qters::QrFrame::QrModuleInterface, QrModuleInterface_iid)
 
 #endif // QRMODULEINTERFACE_H

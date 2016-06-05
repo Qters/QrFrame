@@ -31,9 +31,7 @@ public:
 
 }   //  namespace Qters
 
-QT_BEGIN_NAMESPACE
-    #define QrServiceInterface_iid "com.qters.qrframe.qrserviceinterface"
-    Q_DECLARE_INTERFACE(Qters::QrFrame::QrServiceInterface, QrServiceInterface_iid)
-QT_END_NAMESPACE
+#define QrServiceInterface_iid "com.qters.qrframe.qrserviceinterface"
+Q_DECLARE_INTERFACE(Qters::QrFrame::QrServiceInterface, QrServiceInterface_iid)
 
 #endif // JZSERVICEINTERFACE_H
