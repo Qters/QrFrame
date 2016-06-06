@@ -6,9 +6,7 @@
 #include "qrglobal.h"
 #include "singleton/qrsingleton.h"
 
-namespace Qters {
-
-namespace QrFrame {
+NS_QRFRAME_BEGIN
 
 class QrFramerPrivate;
 
@@ -31,8 +29,6 @@ public:
     virtual bool initFramework();
 };
 
-}   //  namespace QrFrame
-
-}   //  namespace Qters
+NS_QRFRAME_END
 
 #endif // QRFRAME_H

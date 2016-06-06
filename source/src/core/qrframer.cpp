@@ -29,7 +29,7 @@ public:
                                       Logger::LogLevel *defaultLevel);
 
 public:
-    bool readPluginsAndServices();
+    bool readModulesAndServices();
     bool loadModules();
     bool loadServices();
 
@@ -52,7 +52,7 @@ public:
 
 }   //  namespace Qters
 
-using namespace Qters::QrFrame;
+USING_NS_QRFRAME;
 using namespace Qters::QrCommon;
 using namespace Qters::QrOrm;
 
@@ -106,7 +106,7 @@ bool QrFramer::loadFramework()
     qDebug() << "begin load framework";
 
     bool suc = QrSqlHelper::makesureDbExist(QrDbLocal::getInstance())
-            && d->readPluginsAndServices()
+            && d->readModulesAndServices()
             && d->loadServices()
             && d->loadModules();
 
@@ -127,7 +127,7 @@ bool QrFramer::initFramework()
 }
 
 //////////////////////////////////////////////////
-bool QrFramerPrivate::readPluginsAndServices() {
+bool QrFramerPrivate::readModulesAndServices() {
     QVector<QrTblLoadType::LoadType> loadTypes;
     if (! QrTblLoadTypeHelper::getLoadTypes(loadTypes)) {
         return false;
@@ -184,6 +184,7 @@ bool QrFramerPrivate::loadPlugins(QVector<QString> pluginNames,
             qWarning() << pluginAbsName << " is not a plugin object.";
             continue;
         }
+        qInfo() << pluginName << " loaded success.";
         loadedPlugins->append(qMakePair<QString, QObject*>(pluginAbsName, plugin));
     }
 
@@ -212,6 +213,7 @@ bool QrFramerPrivate::initModules() {
         if (moduleIf->init()) {
             qWarning() << module.first << " init fail";
         }
+        qInfo() << "module " << module.first << " init success.";
     }
 
     return true;
@@ -239,6 +241,7 @@ bool QrFramerPrivate::initServices() {
         if (serviceIf->init()) {
             qWarning() << service.first << " init fail";
         }
+        qInfo() << "service " << service.first << " init success.";
     }
 
     return true;
