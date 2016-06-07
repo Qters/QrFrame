@@ -1,6 +1,6 @@
 ﻿#include "db/qrtblframeconfig.h"
 
-#include "db/qrdblocal.h"
+#include "db/qrframedb.h"
 
 #include "qrsqlhelper.h"
 #include "qrdbresultsguard.h"
@@ -67,7 +67,7 @@ bool QrTblFrameConfigHelper::setVauleByKey(const QString& key, const QString &co
 {
     QrTblFrameConfig tblConfig;
 
-    auto database = QrDbLocal::getInstance()->getDatabase();
+    auto database = QrFrameDb::getInstance()->getDatabase();
     QrUpdateSql updateSql;
     auto error = QrSqlHelper::call_query(
                 updateSql.setTable(&tblConfig)
@@ -100,7 +100,7 @@ bool QrTblFrameConfigHelper::getKeyValuesBy(const QString &by, const QString &va
             .where(by).isEqualTo(value)
             .getSqlQuery();
 
-    auto database = QrDbLocal::getInstance()->getDatabase();
+    auto database = QrFrameDb::getInstance()->getDatabase();
     auto error = QrSqlHelper::call_query(query, &database);
     if (error.isValid()) {
         qInfo("could't get frame's config value by %s=%s", by, value);

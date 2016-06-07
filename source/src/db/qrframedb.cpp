@@ -1,14 +1,14 @@
-#include "db/qrdblocal.h"
+#include "db/qrframedb.h"
 
 #include "entity/qrsqldatabase.h"
 
 USING_NS_QRFRAME;
 USING_NS_QRORM;
 
-QR_SINGLETON_IMPLEMENT(QrDbLocal)
+QR_SINGLETON_IMPLEMENT(QrFrameDb)
 
-QrDbLocal::QrDbLocal()
-    : QrSingleton<QrDbLocal>("QrDbLocal")
+QrFrameDb::QrFrameDb()
+    : QrSingleton<QrFrameDb>("QrDbLocal")
 {
     static QrSqlDatabaseParams param;
     param.driverName = "QSQLITE";

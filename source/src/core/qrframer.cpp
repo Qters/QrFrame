@@ -6,7 +6,7 @@
 #include <QtCore/qpair.h>
 #include <QtCore/qdir.h>
 
-#include "db/qrdblocal.h"
+#include "db/qrframedb.h"
 #include "core/qrmoduleinterface.h"
 #include "core/qrserviceinterface.h"
 #include "db/qrtblloadinfo.h"
@@ -69,7 +69,7 @@ bool QrFramer::installLog()
 
     bool defaultUse = true;
     QString defaultFolder = "log";
-    Logger::LogLevel defaultLevel = Logger::Info;
+    Logger::LogLevel defaultLevel = Logger::Debug;
 
     QrFramerPrivate::initLogInfoByDatabase(&defaultUse, &defaultFolder, &defaultLevel);
 
@@ -101,7 +101,7 @@ bool QrFramer::loadFramework()
     Q_D(QrFramer);
     qDebug() << "begin load framework";
 
-    bool suc = QrSqlHelper::makesureDbExist(QrDbLocal::getInstance())
+    bool suc = QrSqlHelper::makesureDbExist(QrFrameDb::getInstance())
             && d->readModulesAndServices()
             && d->loadServices()
             && d->loadModules();

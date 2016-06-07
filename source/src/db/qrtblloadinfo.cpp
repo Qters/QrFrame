@@ -1,6 +1,6 @@
 ﻿#include "db/qrtblloadinfo.h"
 
-#include "db/qrdblocal.h"
+#include "db/qrframedb.h"
 
 #include "qrsqlhelper.h"
 #include "qrdbresultsguard.h"
@@ -48,7 +48,7 @@ bool QrTblLoadInfoHelper::getLoadNamesByLoadType(QrTblLoadType::LoadType typeId,
             .where("type_id").isEqualTo(static_cast<int>(typeId))
             .getSqlQuery();
 
-    auto database = QrDbLocal::getInstance()->getDatabase();
+    auto database = QrFrameDb::getInstance()->getDatabase();
     auto error = QrSqlHelper::call_query(query, &database);
     if (error.isValid()) {
         qFatal("could't get frame's load names by type %d", typeId);

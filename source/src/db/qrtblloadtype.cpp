@@ -1,6 +1,6 @@
 ﻿#include "db/qrtblloadtype.h"
 
-#include "db/qrdblocal.h"
+#include "db/qrframedb.h"
 
 #include "qrsqlhelper.h"
 #include "qrdbresultsguard.h"
@@ -45,7 +45,7 @@ bool QrTblLoadTypeHelper::getLoadTypes(QVector<QrTblLoadType::LoadType>& loadTyp
     auto query = selectSql.setTable(&tblLoadTypes)
             .columns("type").getSqlQuery();
 
-    auto database = QrDbLocal::getInstance()->getDatabase();
+    auto database = QrFrameDb::getInstance()->getDatabase();
     auto error = QrSqlHelper::call_query(query, &database);
     if (error.isValid()) {
         qWarning("could't get frame's load type");

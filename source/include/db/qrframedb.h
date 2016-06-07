@@ -8,14 +8,14 @@
 
 NS_QRFRAME_BEGIN
 
-class QRFRAMESHARED_EXPORT QrDbLocal
+class QRFRAMESHARED_EXPORT QrFrameDb
         : public QrOrm::QrSqlDatabase
-        , public QrCommon::QrSingleton<QrFrame::QrDbLocal>
+        , public QrCommon::QrSingleton<QrFrame::QrFrameDb>
 {
-    QR_SINGLETON_DEFINE(QrDbLocal)
+    QR_SINGLETON_DEFINE(QrFrameDb)
 
 private:
-    QrDbLocal();
+    QrFrameDb();
 };
 
 NS_QRFRAME_END
