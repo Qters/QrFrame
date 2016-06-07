@@ -10,9 +10,7 @@ QT_BEGIN_NAMESPACE
 class QWidget;
 QT_END_NAMESPACE
 
-namespace Qters {
-
-namespace QrFrame {
+NS_QRFRAME_BEGIN
 
 /*!
  * \brief   module's interface
@@ -31,9 +29,7 @@ public:
     virtual bool init() = 0;
 };
 
-}   //  namespace QrFrame
-
-}   //  namespace Qters
+NS_QRFRAME_END
 
 #define QrModuleInterface_iid "com.qters.qrframe.qrmoduleinterface"
 Q_DECLARE_INTERFACE(Qters::QrFrame::QrModuleInterface, QrModuleInterface_iid)

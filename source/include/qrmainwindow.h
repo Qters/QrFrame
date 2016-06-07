@@ -5,9 +5,7 @@
 
 #include "qrframe_global.h"
 
-namespace Qters {
-
-namespace QrFrame {
+NS_QRFRAME_BEGIN
 
 /*!
  * \brief MainWindow in Qters' Framework
@@ -30,8 +28,6 @@ signals:
 public slots:
 };
 
-}   //  namespace QrFrame
-
-}   //  namespace Qters
+NS_QRFRAME_END
 
 #endif // QRMAINWINDOW_H

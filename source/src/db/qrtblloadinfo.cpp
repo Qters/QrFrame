@@ -6,7 +6,7 @@
 #include "qrdbresultsguard.h"
 #include "generator/qrselectsql.h"
 
-using namespace Qters::QrFrame;
+USING_NS_QRFRAME;
 
 int QrTblLoadInfo::getId() const
 {

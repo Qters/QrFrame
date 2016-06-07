@@ -3,14 +3,14 @@
 
 #include "entity/qrsqltable.h"
 
-namespace Qters {
+#include "qrframe_global.h"
 
-namespace QrFrame {
+NS_QRFRAME_BEGIN
 
 /*!
  * \brief table class, for 'config' in database
  */
-class QrTblFrameConfig : public QrOrm::QrSqlTable
+class QRFRAMESHARED_EXPORT QrTblFrameConfig : public QrOrm::QrSqlTable
 {
 public:
     Q_OBJECT
@@ -43,7 +43,7 @@ private:
     QString value;
 };
 
-class QrTblFrameConfigHelper
+class QRFRAMESHARED_EXPORT QrTblFrameConfigHelper
 {
 public:
     static bool getValueByKey(const QString& key, QString *configValue);
@@ -54,8 +54,6 @@ private:
     static bool getKeyValuesBy(const QString& by, const QString& value, QMap<QString, QString> *configValues);
 };
 
-}   //  namespace QrFrame
-
-}   //  namespace Qters
+NS_QRFRAME_END
 
 #endif // QRTBLCONFIG_H

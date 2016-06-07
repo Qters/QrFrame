@@ -2,14 +2,13 @@
 #define QRDBDATABASE_H
 
 #include "entity/qrsqldatabase.h"
-
 #include "singleton/qrsingleton.h"
 
-namespace Qters {
+#include "qrframe_global.h"
 
-namespace QrFrame {
+NS_QRFRAME_BEGIN
 
-class QrDbLocal
+class QRFRAMESHARED_EXPORT QrDbLocal
         : public QrOrm::QrSqlDatabase
         , public QrCommon::QrSingleton<QrFrame::QrDbLocal>
 {
@@ -19,8 +18,6 @@ private:
     QrDbLocal();
 };
 
-}   //  namespace QrFrame
-
-}   //  namespace Qters
+NS_QRFRAME_END
 
 #endif // QRDBDATABASE_H

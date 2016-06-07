@@ -9,22 +9,14 @@
 #  define QRFRAMESHARED_EXPORT Q_DECL_IMPORT
 #endif
 
-#if !define(NS_QRFRAME_BEGIN)
-#define NS_QRFRAME_BEGIN  \
+//  qrframe namespace
+#define NS_QRFRAME_BEGIN \
     namespace Qters { \
-    namespace QrFrame { \
-#endif
-
-#if !define(NS_QRFRAME_END)
-#define NS_QRFRAME_END  \
+    namespace QrFrame {
+#define NS_QRFRAME_END \
     } \
-    } \
-#endif
-
-#if !define(USING_NS_QRFRAME)
-#define USING_NS_QRFRAME  \
-    using namespace Qters::QrFrame
-#endif
-
+    }
+#define USING_NS_QRFRAME    using namespace Qters::QrFrame
+#define NS_QRFRAME  ::Qters::QrFrame
 
 #endif // QRFRAME_GLOBAL_H

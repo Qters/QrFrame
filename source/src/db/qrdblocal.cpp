@@ -2,10 +2,8 @@
 
 #include "entity/qrsqldatabase.h"
 
-
-using namespace Qters::QrFrame;
-using namespace Qters::QrOrm;
-
+USING_NS_QRFRAME;
+USING_NS_QRORM;
 
 QR_SINGLETON_IMPLEMENT(QrDbLocal)
 

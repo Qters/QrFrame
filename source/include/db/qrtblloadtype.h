@@ -3,14 +3,14 @@
 
 #include "entity/qrsqltable.h"
 
-namespace Qters {
+#include "qrframe_global.h"
 
-namespace QrFrame {
+NS_QRFRAME_BEGIN
 
 /*!
  * \brief table class, for 'load_type' in database
  */
-class QrTblLoadType : public QrOrm::QrSqlTable
+class QRFRAMESHARED_EXPORT QrTblLoadType : public QrOrm::QrSqlTable
 {
 public:
     Q_OBJECT
@@ -44,14 +44,12 @@ private:
     QString note;
 };
 
-class QrTblLoadTypeHelper
+class QRFRAMESHARED_EXPORT QrTblLoadTypeHelper
 {
 public:
     static bool getLoadTypes(QVector<QrTblLoadType::LoadType>& loadTypes);
 };
 
-}   //  namespace QrFrame
-
-}   //  namespace Qters
+NS_QRFRAME_END
 
 #endif // QRTBLLOADTYPE_H

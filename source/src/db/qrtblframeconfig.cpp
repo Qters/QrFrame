@@ -7,7 +7,7 @@
 #include "generator/qrselectsql.h"
 #include "generator/qrupdatesql.h"
 
-using namespace Qters::QrFrame;
+USING_NS_QRFRAME;
 
 int QrTblFrameConfig::getId() const
 {

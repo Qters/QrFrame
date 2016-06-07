@@ -4,7 +4,7 @@
 
 #include "core/qrframer.h"
 
-using namespace Qters::QrFrame;
+USING_NS_QRFRAME;
 
 QrMainWindow::QrMainWindow(QWidget *parent)
     : QMainWindow(parent)

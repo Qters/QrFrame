@@ -3,9 +3,7 @@
 
 #include "qrframe_global.h"
 
-namespace Qters {
-
-namespace QrFrame {
+NS_QRFRAME_BEGIN
 
 class QRFRAMESHARED_EXPORT QrServiceLoader
 {
@@ -13,8 +11,6 @@ public:
     QrServiceLoader();
 };
 
-}   //  namespace QrFrame
-
-}   //  namespace Qters
+NS_QRFRAME_END
 
 #endif // QRSERVICELOADER_H

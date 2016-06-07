@@ -1,6 +1,6 @@
 #include "core/qrserviceloader.h"
 
-using namespace Qters::QrFrame;
+USING_NS_QRFRAME;
 
 QrServiceLoader::QrServiceLoader()
 {

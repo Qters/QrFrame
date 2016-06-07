@@ -2,17 +2,16 @@
 #define QRTBLLOADINFO_H
 
 #include "db/qrtblloadtype.h"
-
 #include "entity/qrsqltable.h"
 
-namespace Qters {
+#include "qrframe_global.h"
 
-namespace QrFrame {
+NS_QRFRAME_BEGIN
 
 /*!
  * \brief table class, for 'load_info' in database
  */
-class QrTblLoadInfo : public QrOrm::QrSqlTable
+class QRFRAMESHARED_EXPORT QrTblLoadInfo : public QrOrm::QrSqlTable
 {
 public:
     Q_OBJECT
@@ -40,14 +39,12 @@ private:
     QString load_name;
 };
 
-class QrTblLoadInfoHelper
+class QRFRAMESHARED_EXPORT QrTblLoadInfoHelper
 {
 public:
     static bool getLoadNamesByLoadType(QrTblLoadType::LoadType typeId, QVector<QString>& loadNames);
 };
 
-}   //  namespace QrFrame
-
-}   //  namespace Qters
+NS_QRFRAME_END
 
 #endif // QRTBLLOADINFO_H

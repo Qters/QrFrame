@@ -18,9 +18,7 @@
 
 #include "qrsqlhelper.h"
 
-namespace Qters {
-
-namespace QrFrame {
+NS_QRFRAME_BEGIN
 
 class QrFramerPrivate{
 public:
@@ -48,13 +46,11 @@ public:
     QVector<QPair<QString, QObject *> > loadedServices;
 };
 
-}   //  namespace QrFrame
-
-}   //  namespace Qters
+NS_QRFRAME_END
 
 USING_NS_QRFRAME;
-using namespace Qters::QrCommon;
-using namespace Qters::QrOrm;
+USING_NS_QRCOMMON;
+USING_NS_QRORM;
 
 //////////////////////////////////////////////////
 
@@ -210,7 +206,7 @@ bool QrFramerPrivate::initModules() {
             qWarning() << module.first << " is not a module";
             continue;
         }
-        if (moduleIf->init()) {
+        if (! moduleIf->init()) {
             qWarning() << module.first << " init fail";
         }
         qInfo() << "module " << module.first << " init success.";
@@ -238,7 +234,7 @@ bool QrFramerPrivate::initServices() {
             qWarning() << service.first << " is not a service";
             continue;
         }
-        if (serviceIf->init()) {
+        if (! serviceIf->init()) {
             qWarning() << service.first << " init fail";
         }
         qInfo() << "service " << service.first << " init success.";

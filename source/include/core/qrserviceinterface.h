@@ -6,9 +6,7 @@
 #include "qrframe_global.h"
 #include "qrmoduleinterface.h"
 
-namespace Qters {
-
-namespace QrFrame {
+NS_QRFRAME_BEGIN
 
 /*!
  * \brief   service's interface
@@ -27,9 +25,7 @@ public:
     virtual bool init() = 0;
 };
 
-}   //  namespace QrFrame
-
-}   //  namespace Qters
+NS_QRFRAME_END
 
 #define QrServiceInterface_iid "com.qters.qrframe.qrserviceinterface"
 Q_DECLARE_INTERFACE(Qters::QrFrame::QrServiceInterface, QrServiceInterface_iid)

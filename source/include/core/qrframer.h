@@ -1,9 +1,9 @@
 #ifndef QRFRAME_H
 #define QRFRAME_H
 
+#include "qrglobal.h"
 #include "qrframe_global.h"
 
-#include "qrglobal.h"
 #include "singleton/qrsingleton.h"
 
 NS_QRFRAME_BEGIN
