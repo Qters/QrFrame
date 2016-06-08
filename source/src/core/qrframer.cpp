@@ -5,6 +5,7 @@
 #include <QtWidgets/qapplication.h>
 #include <QtCore/qpair.h>
 #include <QtCore/qdir.h>
+#include <QtCore/qdatetime.h>
 
 #include "db/qrframedb.h"
 #include "core/qrmoduleinterface.h"
@@ -78,13 +79,15 @@ bool QrFramer::installLog()
         return true;
     }
 
-    QString logFilePath = QApplication::applicationDirPath() +
-            "/" + defaultFolder;
+    auto datetime = QDateTime::currentDateTime();
+    QString logFilePath = QApplication::applicationDirPath()
+            + "/" + defaultFolder
+            + "/" + datetime.toString("yyyyMMdd");
     if (!QDir(logFilePath).exists()) {
-        QDir().mkdir(logFilePath);
+        QDir().mkpath(logFilePath);
     }
-    logFilePath += "/" + QString("app-%1.log")
-            .arg (QDateTime::currentDateTime().date ().toString (Qt::ISODate));
+    logFilePath += "/" + QString("%1.log")
+            .arg (datetime.toString ("hh_mm_ss"));
     FileAppender* fileAppender = new FileAppender(logFilePath);
     fileAppender->setDetailsLevel(defaultLevel);
     qDebug() << "log is intalled! and logs are put in " << logFilePath;
