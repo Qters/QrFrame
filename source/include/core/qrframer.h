@@ -19,6 +19,7 @@ class QRFRAMESHARED_EXPORT QrFramer : public QrCommon::QrSingleton<QrFrame::QrFr
     QR_DECLARE_PRIVATE(QrFramer)
 
 public:
+    //  shoule be called in the main function, before all log output.
     static bool installLog();
 
 private:
