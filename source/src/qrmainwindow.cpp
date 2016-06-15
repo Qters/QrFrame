@@ -2,8 +2,6 @@
 
 #include <QtCore/qdebug.h>
 
-#include "core/qrframer.h"
-
 USING_NS_QRFRAME;
 
 QrMainWindow::QrMainWindow(QWidget *parent)
@@ -20,7 +18,6 @@ QrMainWindow::~QrMainWindow()
 
 bool QrMainWindow::init()
 {
-    return QrFramer::getInstance()->loadFramework()
-            && QrFramer::getInstance()->initFramework();
+    return true;
 }
 

@@ -1,10 +1,9 @@
-﻿#ifndef JZSERVICEINTERFACE_H
-#define JZSERVICEINTERFACE_H
+﻿#ifndef QRIFSERVICE_H
+#define QRIFSERVICE_H
 
 #include <QtCore/qobject.h>
 
 #include "qrframe_global.h"
-#include "qrmoduleinterface.h"
 
 NS_QRFRAME_BEGIN
 
@@ -16,10 +15,10 @@ NS_QRFRAME_BEGIN
  *
  *  the sevices would be loaded by QPluginLoader which had been configed in database;
  */
-class QRFRAMESHARED_EXPORT QrServiceInterface
+class QRFRAMESHARED_EXPORT QrIfService
 {
 public:
-    virtual ~QrServiceInterface() = default;
+    virtual ~QrIfService() = default;
 
 public:
     virtual bool init() = 0;
@@ -27,7 +26,7 @@ public:
 
 NS_QRFRAME_END
 
-#define QrServiceInterface_iid "com.qters.qrframe.qrserviceinterface"
-Q_DECLARE_INTERFACE(Qters::QrFrame::QrServiceInterface, QrServiceInterface_iid)
+#define QrIfService_iid "com.qters.qrframe.qrifservice"
+Q_DECLARE_INTERFACE(Qters::QrFrame::QrIfService, QrIfService_iid)
 
-#endif // JZSERVICEINTERFACE_H
+#endif // QRIFSERVICE_H

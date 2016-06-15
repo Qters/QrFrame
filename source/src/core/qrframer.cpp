@@ -8,11 +8,10 @@
 #include <QtCore/qdatetime.h>
 
 #include "db/qrframedb.h"
-#include "core/qrmoduleinterface.h"
-#include "core/qrserviceinterface.h"
+#include "core/qrifservice.h"
 #include "db/qrtblloadinfo.h"
-#include "db/qrtblloadtype.h"
 #include "db/qrtblframeconfig.h"
+#include "qrmainwindow.h"
 
 #include "Logger.h"
 #include "FileAppender.h"
@@ -23,27 +22,20 @@ NS_QRFRAME_BEGIN
 
 class QrFramerPrivate{
 public:
+    static bool installLog();
     static bool initLogInfoByDatabase(bool *defaultUse,
                                       QString *defaultFolder,
                                       Logger::LogLevel *defaultLevel);
 
 public:
-    bool readModulesAndServices();
-    bool loadModules();
+    bool initByConfig();
     bool loadServices();
-
-public:
-    bool loadPlugins(QVector<QString> pluginNames,
-                     const QString& pathKey,
-                     const QString& defaultFolder,
-                     QVector<QPair<QString, QObject *> > *loadedPlugins) const;
-    bool initModules();
     bool initServices();
 
 public:
-    QVector<QString> moduleNames;
+    QrMainWindow *mainwindow;
+    QrFramerConfig frameConfig;
     QVector<QString> serviceNames;
-    QVector<QPair<QString, QObject *> > loadedModules;
     QVector<QPair<QString, QObject *> > loadedServices;
 };
 
@@ -55,16 +47,135 @@ USING_NS_QRORM;
 
 //////////////////////////////////////////////////
 
-QR_SINGLETON_IMPLEMENT(QrFramer)
-
-QrFramer::QrFramer()
-    : QrSingleton<QrFramer>("QrFramer")
-    , d_ptr(new QrFramerPrivate)
+QrFramer::QrFramer() : d_ptr(new QrFramerPrivate)
 {
 
 }
 
-bool QrFramer::installLog()
+void QrFramer::setMainWindow(QrMainWindow *mainwindow)
+{
+    Q_D(QrFramer);
+    d->mainwindow = mainwindow;
+}
+
+bool QrFramer::start()
+{
+    Q_D(QrFramer);
+    if (! d->initByConfig()) {
+        qWarning() << "framer initialize fail by config";
+    }
+
+    if (! loadFramework()
+            && initFramework() ) {
+        qWarning() << "framer start fail";
+        return false;
+    }
+
+    d->mainwindow->show();
+    return true;
+}
+
+void QrFramer::setConfig(const QrFramerConfig &config)
+{
+    Q_D(QrFramer);
+    d->frameConfig = config;
+}
+
+bool QrFramer::loadFramework()
+{
+    Q_D(QrFramer);
+    qDebug() << "begin load framework";
+
+    bool suc = QrSqlHelper::makesureDbExist(QrFrameDb::getInstance())
+            && QrTblLoadInfoHelper::getLoadServices(d->serviceNames)
+            && d->loadServices();
+
+    qDebug() << "end load framework";
+    return suc;
+}
+
+bool QrFramer::initFramework()
+{
+    Q_D(QrFramer);
+    qDebug() << "begin initialize framework";
+
+    bool suc = d->initServices();
+
+    qDebug() << "end initialize framework";
+    return suc;
+}
+
+//////////////////////////////////////////////////
+bool QrFramerPrivate::loadServices() {
+    static const QString dbKey = "services_folder";
+    static const QString defaultFolder = "services";
+
+    if (this->serviceNames.isEmpty()) {
+        qInfo() << "services is empty";
+        return true;
+    }
+
+    QString pluginFolder;
+    if (! QrTblFrameConfigHelper::getValueByKey(dbKey, &pluginFolder)) {
+        pluginFolder = defaultFolder;
+        QrTblFrameConfigHelper::setVauleByKey(dbKey, pluginFolder);
+    }
+
+    this->loadedServices.clear();
+    QPluginLoader serviceLoader;
+    const QString absPathOfServicePlugin = QApplication::applicationDirPath() + "/" + pluginFolder + "/";
+    Q_FOREACH(auto serviceName, this->serviceNames) {
+        QString absFileNameOfServicePlugin = absPathOfServicePlugin + serviceName;
+#ifdef QT_DEBUG
+        absFileNameOfServicePlugin += "d";
+#endif
+        absFileNameOfServicePlugin += ".dll";
+        serviceLoader.setFileName(absFileNameOfServicePlugin);
+        QObject *servicePllugin = serviceLoader.instance();
+        if(nullptr == servicePllugin){
+            qWarning() << absFileNameOfServicePlugin << " is not a service plugin object.";
+            continue;
+        }
+        qInfo() << serviceName << " loaded success.";
+        this->loadedServices.append(qMakePair<QString, QObject*>(absFileNameOfServicePlugin, servicePllugin));
+    }
+
+    return true;
+}
+
+bool QrFramerPrivate::initServices() {
+    Q_FOREACH(auto service, this->loadedServices) {
+        auto *serviceIf = qobject_cast<QrIfService*>(service.second);
+        if (nullptr == serviceIf) {
+            qWarning() << service.first << " is not a service";
+            continue;
+        }
+        if (! serviceIf->init()) {
+            qWarning() << service.first << " init fail";
+        }
+        qInfo() << "service " << service.first << " init success.";
+    }
+
+    return true;
+}
+
+bool QrFramerPrivate::initByConfig()
+{
+    bool initSuc = true;
+
+    if (frameConfig.installLog) {   //  should do it first
+        initSuc = QrFramerPrivate::installLog();
+    }
+
+    if (initSuc && ! frameConfig.dbFolder.isEmpty()) {
+        qInfo("frame database's folder is %s", frameConfig.dbFolder);
+        QrFrameDb::getInstance()->setFolderPath(frameConfig.dbFolder);
+    }
+
+    return initSuc;
+}
+
+bool QrFramerPrivate::installLog()
 {
     qDebug() << "begin install log service";
 
@@ -96,153 +207,6 @@ bool QrFramer::installLog()
 
     qInfo().noquote() << "\n\n============================================";
     qInfo() << "start log.";
-    return true;
-}
-
-bool QrFramer::loadFramework()
-{
-    Q_D(QrFramer);
-    qDebug() << "begin load framework";
-
-    bool suc = QrSqlHelper::makesureDbExist(QrFrameDb::getInstance())
-            && d->readModulesAndServices()
-            && d->loadServices()
-            && d->loadModules();
-
-    qDebug() << "end load framework";
-    return suc;
-}
-
-bool QrFramer::initFramework()
-{
-    Q_D(QrFramer);
-    qDebug() << "begin initialize framework";
-
-    bool suc = d->initServices()
-            && d->initModules();
-
-    qDebug() << "end initialize framework";
-    return suc;
-}
-
-//////////////////////////////////////////////////
-bool QrFramerPrivate::readModulesAndServices() {
-    QVector<QrTblLoadType::LoadType> loadTypes;
-    if (! QrTblLoadTypeHelper::getLoadTypes(loadTypes)) {
-        return false;
-    }
-
-    QVector<QString> loadNames;
-    Q_FOREACH(auto typeId, loadTypes) {
-        if (! QrTblLoadInfoHelper::getLoadNamesByLoadType(typeId, loadNames)) {
-            continue;
-        }
-        switch (typeId) {
-        case QrTblLoadType::LoadType::Module:
-            moduleNames = loadNames;
-            break;
-        case QrTblLoadType::LoadType::Service:
-            serviceNames = loadNames;
-            break;
-        default:
-            qInfo() << "could't recognize load type in loading";
-            break;
-        }
-    }
-
-    return true;
-}
-
-bool QrFramerPrivate::loadPlugins(QVector<QString> pluginNames,
-                                  const QString& pathKey,
-                                  const QString &defaultFolder,
-                                  QVector<QPair<QString, QObject *> > *loadedPlugins) const {
-    if (pluginNames.isEmpty()) {
-        qInfo() << pathKey << "'s plugins is empty";
-        return true;
-    }
-
-    QString pluginPath;
-    if (! QrTblFrameConfigHelper::getValueByKey(pathKey, &pluginPath)) {
-        pluginPath = defaultFolder;
-        QrTblFrameConfigHelper::setVauleByKey(pathKey, pluginPath);
-    }
-
-    loadedPlugins->clear();
-    QPluginLoader pluginLoader;
-    const QString pluginAbsPath = QApplication::applicationDirPath() + "/" + pluginPath + "/";
-    Q_FOREACH(auto pluginName, pluginNames) {
-        QString pluginAbsName = pluginAbsPath + pluginName;
-#ifdef QT_DEBUG
-        pluginAbsName += "d";
-#endif
-        pluginAbsName += ".dll";
-        pluginLoader.setFileName(pluginAbsName);
-        QObject *plugin = pluginLoader.instance();
-        if(nullptr == plugin){
-            qWarning() << pluginAbsName << " is not a plugin object.";
-            continue;
-        }
-        qInfo() << pluginName << " loaded success.";
-        loadedPlugins->append(qMakePair<QString, QObject*>(pluginAbsName, plugin));
-    }
-
-    return true;
-}
-
-bool QrFramerPrivate::loadModules() {
-    this->loadedModules.clear();
-    if (! loadPlugins(this->moduleNames,
-                      "modules_path",
-                      "modules",
-                      &loadedModules) ) {
-        return false;
-    }
-
-    return true;
-}
-
-bool QrFramerPrivate::initModules() {
-    Q_FOREACH(auto module, this->loadedModules) {
-        auto *moduleIf = qobject_cast<QrModuleInterface*>(module.second);
-        if (nullptr == moduleIf) {
-            qWarning() << module.first << " is not a module";
-            continue;
-        }
-        if (! moduleIf->init()) {
-            qWarning() << module.first << " init fail";
-        }
-        qInfo() << "module " << module.first << " init success.";
-    }
-
-    return true;
-}
-
-bool QrFramerPrivate::loadServices() {
-    this->loadedServices.clear();
-    if (! loadPlugins(this->serviceNames,
-                      "services_path",
-                      "services",
-                      &this->loadedServices) ) {
-        return false;
-    }
-
-    return true;
-}
-
-bool QrFramerPrivate::initServices() {
-    Q_FOREACH(auto service, this->loadedServices) {
-        auto *serviceIf = qobject_cast<QrServiceInterface*>(service.second);
-        if (nullptr == serviceIf) {
-            qWarning() << service.first << " is not a service";
-            continue;
-        }
-        if (! serviceIf->init()) {
-            qWarning() << service.first << " init fail";
-        }
-        qInfo() << "service " << service.first << " init success.";
-    }
-
     return true;
 }
 

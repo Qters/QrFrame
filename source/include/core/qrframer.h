@@ -4,26 +4,39 @@
 #include "qrglobal.h"
 #include "qrframe_global.h"
 
-#include "singleton/qrsingleton.h"
-
 NS_QRFRAME_BEGIN
 
 class QrFramerPrivate;
+class QrMainWindow;
+
+
+/*!
+ * \brief framer configuration
+ */
+class QrFramerConfig{
+public:
+    QrFramerConfig()
+        : installLog(true)
+    {}
+
+    bool installLog;
+    QString dbFolder;
+};
 
 /*!
  * \brief do some job about framework
  */
-class QRFRAMESHARED_EXPORT QrFramer : public QrCommon::QrSingleton<QrFrame::QrFramer>
+class QRFRAMESHARED_EXPORT QrFramer
 {
-    QR_SINGLETON_DEFINE(QrFramer)
     QR_DECLARE_PRIVATE(QrFramer)
 
 public:
-    //  shoule be called in the main function, before all log output.
-    static bool installLog();
-
-private:
     QrFramer();
+
+public:
+    bool start();
+    void setConfig(const QrFramerConfig& config);
+    void setMainWindow(QrMainWindow *mainwindow);
 
 public:
     virtual bool loadFramework();
