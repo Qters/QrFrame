@@ -10,7 +10,7 @@ NS_QRFRAME_BEGIN
 /*!
  * \brief   service's interface
  *
- *  Separate each functional service that privide to Module,
+ *  Separate each functional service that privide to user,
  *  so Qters's Framework can support the collaboration between company departments.
  *
  *  the sevices would be loaded by QPluginLoader which had been configed in database;
