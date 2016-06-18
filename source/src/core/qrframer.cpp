@@ -71,6 +71,10 @@ bool QrFramer::start()
         return false;
     }
 
+    if (! d->mainwindow->init()) {
+        qWarning() << "mainwindow init fail";
+        return false;
+    }
     d->mainwindow->show();
     return true;
 }
