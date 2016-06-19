@@ -12,7 +12,6 @@ NS_QRFRAME_BEGIN
  */
 class QRFRAMESHARED_EXPORT QrTblLoadInfo : public QrOrm::QrSqlTable
 {
-public:
     Q_OBJECT
     Q_PROPERTY(int id READ getId WRITE setId)
     Q_PROPERTY(QString load_name READ getLoad_name WRITE setLoad_name)
