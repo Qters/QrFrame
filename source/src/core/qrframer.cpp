@@ -65,9 +65,8 @@ bool QrFramer::start()
         qWarning() << "framer initialize fail by config";
     }
 
-    if (! loadFramework()
-            && initFramework() ) {
-        qWarning() << "framer start fail";
+    if (! loadFramework() ) {
+        qWarning() << "framework loaded fail";
         return false;
     }
 
@@ -75,6 +74,12 @@ bool QrFramer::start()
         qWarning() << "mainwindow init fail";
         return false;
     }
+
+    if (! initFramework() ) {
+        qWarning() << "framework init fail";
+        return false;
+    }
+
     d->mainwindow->show();
     return true;
 }
