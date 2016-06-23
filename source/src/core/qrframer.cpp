@@ -116,7 +116,8 @@ bool QrFramer::initFramework()
 
 //////////////////////////////////////////////////
 bool QrFramerPrivate::loadServices() {
-    static const QString dbKey = "services_folder";
+    static const QString dbServiceType = "service";
+    static const QString dbKey = "folder";
     static const QString defaultFolder = "services";
 
     if (this->serviceNames.isEmpty()) {
@@ -125,9 +126,14 @@ bool QrFramerPrivate::loadServices() {
     }
 
     QString pluginFolder;
-    if (! QrTblFrameConfigHelper::getValueByKey(dbKey, &pluginFolder)) {
-        pluginFolder = defaultFolder;
-        QrTblFrameConfigHelper::setVauleByKey(dbKey, pluginFolder);
+    QMap<QString, QString> serviceValues;
+    if ( QrTblFrameConfigHelper::getKeyValuesByType(dbServiceType, &serviceValues)) {
+        if (! serviceValues[dbKey].isEmpty()) {
+            pluginFolder = serviceValues[dbKey];
+        } else {
+            pluginFolder = defaultFolder;
+            QrTblFrameConfigHelper::setVauleBy(dbServiceType, dbKey, pluginFolder);
+        }
     }
 
     this->loadedServices.clear();
@@ -231,11 +237,11 @@ bool QrFramerPrivate::initLogInfoByDatabase(bool *defaultUse,
     for (QMap<QString, QString>::const_iterator iter = configValues.constBegin();
          iter != configValues.constEnd();
          ++iter) {
-        if ("log_use" == iter.key()) {
+        if ("use" == iter.key()) {
             *defaultUse = (iter.value() == "true" || iter.value() == "1");
-        } else if ("log_folder" == iter.key()) {
+        } else if ("folder" == iter.key()) {
             *defaultFolder = iter.value();
-        } else if ("log_level" == iter.key()) {
+        } else if ("level" == iter.key()) {
             if ("trace" == iter.value().toLower()) {
                 *defaultLevel = Logger::LogLevel::Trace;
             } else if ("debug" == iter.value().toLower()) {

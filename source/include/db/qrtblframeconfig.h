@@ -46,8 +46,8 @@ private:
 class QRFRAMESHARED_EXPORT QrTblFrameConfigHelper
 {
 public:
-    static bool getValueByKey(const QString& key, QString *configValue);
-    static bool setVauleByKey(const QString& key, const QString& configValue);
+    static bool getValueBy(const QString& type, const QString& key, QString *configValue);
+    static bool setVauleBy(const QString& type, const QString& key, const QString& configValue);
     static bool getKeyValuesByType(const QString& type, QMap<QString, QString> *configValues);
 
 private:

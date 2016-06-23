@@ -49,21 +49,22 @@ void QrTblFrameConfig::setType(const QString & value)
     type = value;
 }
 
-bool QrTblFrameConfigHelper::getValueByKey(const QString& key,
+bool QrTblFrameConfigHelper::getValueBy(const QString& type,
+                                           const QString& key,
                                            QString *configValue)
 {
     Q_ASSERT(nullptr != configValue);
 
     QMap<QString, QString> configValues;
-    if (! getKeyValuesBy("key", key, &configValues)) {
+    if (! getKeyValuesByType(type, &configValues)) {
         return false;
     }
 
-    *configValue = configValues.first();
+    *configValue = configValues[key];
     return true;
 }
 
-bool QrTblFrameConfigHelper::setVauleByKey(const QString& key, const QString &configValue)
+bool QrTblFrameConfigHelper::setVauleBy(const QString& type, const QString& key, const QString &configValue)
 {
     QrTblFrameConfig tblConfig;
 
@@ -72,7 +73,8 @@ bool QrTblFrameConfigHelper::setVauleByKey(const QString& key, const QString &co
     auto error = QrSqlHelper::call_query(
                 updateSql.setTable(&tblConfig)
                 .colvals(qMakePair<QString, QVariant>("value", configValue))
-                .where("key").isEqualTo(key).getSqlQuery(),
+                .where("type").isEqualTo(type)
+                .and_("key").isEqualTo(key).getSqlQuery(),
                 &database);
     if (error.isValid()) {
         qFatal("could't set frame's config value by %s", key);
