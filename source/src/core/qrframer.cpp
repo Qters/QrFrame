@@ -9,7 +9,6 @@
 
 #include "db/qrframedb.h"
 #include "core/qrifservice.h"
-#include "db/qrtblloadinfo.h"
 #include "db/qrtblframeconfig.h"
 #include "qrmainwindow.h"
 
@@ -29,6 +28,7 @@ public:
 
 public:
     bool initByConfig();
+    bool getServices(QVector<QString> &serviceNames);
     bool loadServices();
     bool initServices();
 
@@ -96,7 +96,7 @@ bool QrFramer::loadFramework()
     qDebug() << "begin load framework";
 
     bool suc = QrSqlHelper::makesureDbExist(QrFrameDb::getInstance())
-            && QrTblLoadInfoHelper::getLoadServices(d->serviceNames)
+            && d->getServices(d->serviceNames)
             && d->loadServices();
 
     qDebug() << "end load framework";
@@ -115,6 +115,22 @@ bool QrFramer::initFramework()
 }
 
 //////////////////////////////////////////////////
+bool QrFramerPrivate::getServices(QVector<QString>& serviceNames){
+    static const QString dbServiceType = "service";
+    static const QString dbKey = "dlls";
+
+    QString dlls;
+    if (! QrTblFrameConfigHelper::getValueBy(dbServiceType, dbKey, &dlls)) {
+        return false;
+    }
+
+    Q_FOREACH(auto dll, dlls.split(';')){
+        serviceNames.push_back(dll);
+    }
+
+    return true;
+}
+
 bool QrFramerPrivate::loadServices() {
     static const QString dbServiceType = "service";
     static const QString dbKey = "folder";
