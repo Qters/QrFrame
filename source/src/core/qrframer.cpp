@@ -125,6 +125,9 @@ bool QrFramerPrivate::getServices(QVector<QString>& serviceNames){
     }
 
     Q_FOREACH(auto dll, dlls.split(';')){
+        if (dll.isEmpty()) {
+            continue;
+        }
         serviceNames.push_back(dll);
     }
 
