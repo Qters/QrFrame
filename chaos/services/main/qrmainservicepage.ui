@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>494</width>
+    <height>273</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,14 +29,17 @@
   <widget class="QLabel" name="presentation">
    <property name="geometry">
     <rect>
-     <x>80</x>
-     <y>110</y>
-     <width>54</width>
-     <height>12</height>
+     <x>60</x>
+     <y>80</y>
+     <width>351</width>
+     <height>121</height>
     </rect>
    </property>
    <property name="text">
-    <string/>
+    <string>  A wonderful qt client develop framework, support to do job by the collaboration between company departments. </string>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
    </property>
   </widget>
  </widget>
