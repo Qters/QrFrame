@@ -6,6 +6,7 @@
 
 #include "gui/qrframewindow.h"
 #include "gui/qrworkspace.h"
+#include "gui/qrstatusbar.h"
 
 NS_CHAOS_BASE_BEGIN
 
@@ -54,7 +55,23 @@ void QrChaosMainwindowPrivate::initShortcuts() {
     });
 
     //  TODO
+    auto switchNormalMode = new QAction(q);
+    switchNormalMode->setShortcut(QKeySequence(Qt::ALT + Qt::Key_1));
+    q->addAction(switchNormalMode);
+    QObject::connect(switchNormalMode, &QAction::triggered,
+                     this->frameWindow->getStatusbar(), &QrStatusBar::onNormalMode);
 
+    auto switchSimpleMode = new QAction(q);
+    switchSimpleMode->setShortcut(QKeySequence(Qt::ALT + Qt::Key_2));
+    q->addAction(switchSimpleMode);
+    QObject::connect(switchSimpleMode, &QAction::triggered,
+                     this->frameWindow->getStatusbar(), &QrStatusBar::onSimpleMode);
+
+    auto switchFullMode = new QAction(q);
+    switchFullMode->setShortcut(QKeySequence(Qt::ALT + Qt::Key_3));
+    q->addAction(switchFullMode);
+    QObject::connect(switchFullMode, &QAction::triggered,
+                     this->frameWindow->getStatusbar(), &QrStatusBar::onFullScreenMode);
 }
 
 void QrChaosMainwindowPrivate::setMiniumSize() {
