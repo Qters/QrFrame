@@ -2,6 +2,7 @@
 
 #include <QtWidgets/qpushbutton.h>
 #include <QtWidgets/qboxlayout.h>
+#include <QtWidgets/qlineedit.h>
 
 NS_CHAOS_BASE_BEGIN
 
@@ -15,7 +16,7 @@ public:
 
 public:
     QPushButton* autoHide = nullptr;
-    QPushButton* search = nullptr;
+    QLineEdit* search = nullptr;
 };
 
 void QrNavigationHeaderPrivate::loadUI()
@@ -23,15 +24,16 @@ void QrNavigationHeaderPrivate::loadUI()
     Q_Q(QrNavigationHeader);
     autoHide = new QPushButton(q);
     autoHide->setCursor(Qt::PointingHandCursor);
+    autoHide->setToolTip("auto hide");
 
-    search = new QPushButton(q);
-    search->setCursor(Qt::PointingHandCursor);
+    search = new QLineEdit(q);
+    search->setPlaceholderText("Search Navigation");
 
     QHBoxLayout* mainLayout = new QHBoxLayout();
     mainLayout->setContentsMargins(0,0,0,0);
     mainLayout->setSpacing(0);
-    mainLayout->addWidget(autoHide, 0, Qt::AlignLeft);
-    mainLayout->addWidget(search, 0, Qt::AlignRight);
+    mainLayout->addWidget(search, 0, Qt::AlignLeft);
+    mainLayout->addWidget(autoHide, 0, Qt::AlignRight);
     q->setLayout(mainLayout);
 }
 
