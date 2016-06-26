@@ -27,7 +27,7 @@ public:
     QrNavigationHeader *header = nullptr;
     QrNavigationTabPage *totalTabPage = nullptr;
     QrNavigationTabPage *customTabPage = nullptr;
-    QTabWidget* tabWidget = nullptr;
+    QTabWidget* navigationTab = nullptr;
     QMap<QString, QPushButton*> pathButtonContainer;
 
 public:
@@ -66,19 +66,30 @@ void QrNavigationPrivate::loadUI()
         this->pathButtonContainer.erase(findIter);
         qDebug() << "navigation remove item " << path;
     });
+    this->header->navigationModelProxy(totalTabPage->modelProxy()); //  default
 
     customTabPage = new QrNavigationTabPage(q);
 
-    tabWidget = new QTabWidget(q);
-    tabWidget->addTab(totalTabPage, "Total");
-    tabWidget->addTab(customTabPage, "Custom");
+    navigationTab = new QTabWidget(q);
+    navigationTab->addTab(totalTabPage, "Total");
+    navigationTab->addTab(customTabPage, "Custom");
 
     QVBoxLayout* mainLayout = new QVBoxLayout();
     mainLayout->setContentsMargins(0,0,0,0);
     mainLayout->setSpacing(0);
     mainLayout->addWidget(header);
-    mainLayout->addWidget(tabWidget);
+    mainLayout->addWidget(navigationTab);
     q->setLayout(mainLayout);
+
+    QObject::connect(navigationTab, &QTabWidget::currentChanged, [this](int index){
+        auto curNavTab = qobject_cast<QrNavigationTabPage*>(this->navigationTab->widget(index));
+        this->header->navigationModelProxy(curNavTab->modelProxy());
+    });
+
+
+    QObject::connect(this->header, &QrNavigationHeader::beginSearch, [this](){
+        qobject_cast<QrNavigationTabPage*>(navigationTab->currentWidget())->expandAll();
+    });
 }
 
 QPushButton *QrNavigationPrivate::getButton(const QString &path)

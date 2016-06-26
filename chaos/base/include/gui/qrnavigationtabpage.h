@@ -14,6 +14,7 @@ BENIGN_RACE_END
 
 NS_CHAOS_BASE_BEGIN
 
+class QrNavigationFilterProxyModel;
 class QrNavigationTabPagePrivate;
 
 class CHAOSBASE_SHAREDEXPORT QrNavigationTabPage : public QWidget
@@ -28,8 +29,12 @@ signals:
 public:
     QrNavigationTabPage(QWidget* parent = 0);
 
+public Q_SLOTS:
+    void expandAll();
+
 public:
     void initModelByDbData(QrNavigationDbData* dbData);
+    QrNavigationFilterProxyModel *modelProxy();
 };
 
 NS_CHAOS_BASE_END

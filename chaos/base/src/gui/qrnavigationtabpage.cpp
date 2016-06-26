@@ -4,9 +4,11 @@
 #include <QtWidgets/qboxlayout.h>
 #include <QtWidgets/qpushbutton.h>
 #include <QtCore/qdebug.h>
+#include <QtCore/qsortfilterproxymodel.h>
 
 #include "gui/qrnavigationtabpageview.h"
 #include "db/qrtblnavigation.h"
+#include "gui/qrnavigationmodel.h"
 
 NS_CHAOS_BASE_BEGIN
 
@@ -26,6 +28,7 @@ public:
 public:
     QrNavigationTabView *view = nullptr;
     QStandardItemModel *data = nullptr;
+    QrNavigationFilterProxyModel *dataProxy = nullptr;
     QMap<QStandardItem*, QPushButton*> dataItemMapBtn;  //  store to call button click event when view click event happen
     QMap<QPushButton*, QString> buttonMapKey;   //   store to remove pushbutton of button container when reinit
 };
@@ -35,8 +38,12 @@ void QrNavigationTabPagePrivate::loadUI()
     Q_Q(QrNavigationTabPage);
     view = new QrNavigationTabView(q);
     data = new QStandardItemModel(view);
+    dataProxy = new QrNavigationFilterProxyModel(view);
+    dataProxy->setSourceModel(data);
+    dataProxy->setFilterKeyColumn(0);
+    dataProxy->setFilterCaseSensitivity(Qt::CaseInsensitive);
 
-    view->setModel(data);
+    view->setModel(dataProxy);
     view->setFocusPolicy(Qt::NoFocus);
     view->setEditTriggers(QAbstractItemView::NoEditTriggers);
     view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -70,7 +77,6 @@ void QrNavigationTabPagePrivate::initModel(QString parentKey,
     Q_Q(QrNavigationTabPage);
     Q_FOREACH(QrNavigationDbData* data, dbData->children) {
         QStandardItem *item = new QStandardItem(data->display);
-        rootItem->appendRow(item);
         if (! data->children.empty()) {
             initModel(parentKey.isEmpty() ? data->key
                         : parentKey+"."+data->key,
@@ -84,6 +90,7 @@ void QrNavigationTabPagePrivate::initModel(QString parentKey,
 
             emit q->addButton(itemPath, itemButton);
         }
+        rootItem->appendRow(item);
     }
 }
 
@@ -112,11 +119,22 @@ QrNavigationTabPage::QrNavigationTabPage(QWidget* parent)
     d_ptr->loadUI();
 }
 
+void QrNavigationTabPage::expandAll()
+{
+    Q_D(QrNavigationTabPage);
+    d->view->expandAll();
+}
+
 void QrNavigationTabPage::initModelByDbData(QrNavigationDbData *dbData)
 {
     Q_D(QrNavigationTabPage);
     d->clearModel();
-    auto rootItem = d->data->invisibleRootItem();
-    d->initModel("", rootItem, dbData);
+    d->initModel("", d->data->invisibleRootItem(), dbData);
     d->connectConfigs();
+}
+
+QrNavigationFilterProxyModel *QrNavigationTabPage::modelProxy()
+{
+    Q_D(QrNavigationTabPage);
+    return d->dataProxy;
 }

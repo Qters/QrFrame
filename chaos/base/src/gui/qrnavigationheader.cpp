@@ -3,6 +3,10 @@
 #include <QtWidgets/qpushbutton.h>
 #include <QtWidgets/qboxlayout.h>
 #include <QtWidgets/qlineedit.h>
+#include <QtGui/qstandarditemmodel.h>
+#include <QtCore/qsortfilterproxymodel.h>
+
+#include "gui/qrnavigationmodel.h"
 
 NS_CHAOS_BASE_BEGIN
 
@@ -17,6 +21,7 @@ public:
 public:
     QPushButton* autoHide = nullptr;
     QLineEdit* search = nullptr;
+    QrNavigationFilterProxyModel *filterProxy;
 };
 
 void QrNavigationHeaderPrivate::loadUI()
@@ -28,6 +33,15 @@ void QrNavigationHeaderPrivate::loadUI()
 
     search = new QLineEdit(q);
     search->setPlaceholderText("Search Navigation");
+
+    QObject::connect(search, &QLineEdit::textChanged, [this](const QString &value){
+        if (nullptr == this->filterProxy
+                ||  nullptr == this->filterProxy->sourceModel()) {
+            return;
+        }
+        emit this->q_func()->beginSearch();
+        this->filterProxy->setFilterRegExp(value);
+    });
 
     QHBoxLayout* mainLayout = new QHBoxLayout();
     mainLayout->setContentsMargins(0,0,0,0);
@@ -46,5 +60,11 @@ QrNavigationHeader::QrNavigationHeader(QWidget* parent)
     : QFrame(parent), d_ptr(new QrNavigationHeaderPrivate(this))
 {
     d_ptr->loadUI();
+}
+
+void QrNavigationHeader::navigationModelProxy(QrNavigationFilterProxyModel *modelProxy)
+{
+    Q_D(QrNavigationHeader);
+    d->filterProxy = modelProxy;
 }
 
