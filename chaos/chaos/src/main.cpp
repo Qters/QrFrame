@@ -4,7 +4,7 @@
 #include "core/qrframer.h"
 #include "db/qrframedb.h"
 
-#include "gui/qrnormalmainwindow.h"
+#include "gui/qrchaosmainwindow.h"
 #include "gui/qrnavigation.h"
 
 USING_NS_QRFRAME;

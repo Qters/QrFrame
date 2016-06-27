@@ -1,4 +1,4 @@
-#include "gui/qrnormalmainwindow.h"
+#include "gui/qrchaosmainwindow.h"
 
 #include <QtWidgets/qaction.h>
 #include <QtWidgets/qdesktopwidget.h>
