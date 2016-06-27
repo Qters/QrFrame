@@ -1,14 +1,14 @@
-#include "gui/qrnavigationtabpage.h"
+#include "gui/navigation/qrnavigationtabpage.h"
 
+#include <QtCore/qdebug.h>
+#include <QtCore/qsortfilterproxymodel.h>
 #include <QtGui/qstandarditemmodel.h>
 #include <QtWidgets/qboxlayout.h>
 #include <QtWidgets/qpushbutton.h>
-#include <QtCore/qdebug.h>
-#include <QtCore/qsortfilterproxymodel.h>
 
-#include "gui/qrnavigationtabpageview.h"
 #include "db/qrtblnavigation.h"
-#include "gui/qrnavigationmodel.h"
+#include "gui/navigation/qrnavigationmodel.h"
+#include "gui/navigation/qrnavigationtabpageview.h"
 
 NS_CHAOS_BASE_BEGIN
 

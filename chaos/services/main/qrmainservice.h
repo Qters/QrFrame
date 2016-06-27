@@ -3,7 +3,7 @@
 
 #include "qrglobal.h"
 #include "core/qrifservice.h"
-#include "gui/qrnavigation.h"
+#include "gui/navigation/qrnavigation.h"
 #include "qrchaosmainservice_global.h"
 
 NS_CHAOS_MAIN_SERVICE_BEGIN

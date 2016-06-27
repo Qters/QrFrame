@@ -1,4 +1,4 @@
-#include "gui/qrnavigationmodel.h"
+#include "gui/navigation/qrnavigationmodel.h"
 
 USING_NS_CHAOS_BASE;
 

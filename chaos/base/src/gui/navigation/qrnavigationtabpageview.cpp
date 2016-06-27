@@ -1,4 +1,4 @@
-#include "gui/qrnavigationtabpageview.h"
+#include "gui/navigation/qrnavigationtabpageview.h"
 
 NS_CHAOS_BASE_BEGIN
 

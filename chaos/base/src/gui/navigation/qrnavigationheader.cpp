@@ -1,4 +1,4 @@
-#include "gui/qrnavigationheader.h"
+#include "gui/navigation/qrnavigationheader.h"
 
 #include <QtWidgets/qpushbutton.h>
 #include <QtWidgets/qboxlayout.h>
@@ -6,7 +6,7 @@
 #include <QtGui/qstandarditemmodel.h>
 #include <QtCore/qsortfilterproxymodel.h>
 
-#include "gui/qrnavigationmodel.h"
+#include "gui/navigation/qrnavigationmodel.h"
 
 NS_CHAOS_BASE_BEGIN
 

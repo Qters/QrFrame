@@ -5,7 +5,7 @@
 
 #include "gui/qrframewindow.h"
 #include "gui/qrheader.h"
-#include "gui/qrnavigation.h"
+#include "gui/navigation/qrnavigation.h"
 
 
 NS_CHAOS_BASE_BEGIN

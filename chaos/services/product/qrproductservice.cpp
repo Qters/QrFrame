@@ -4,9 +4,9 @@
 #include <QtWidgets/qlabel.h>
 #include <QtWidgets/qapplication.h>
 
-#include "gui/qrnavigation.h"
 #include "gui/qrworkspace.h"
 #include "gui/qrsystemtray.h"
+#include "gui/navigation/qrnavigation.h"
 
 #include "qrproductform.h"
 

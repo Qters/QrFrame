@@ -3,11 +3,11 @@
 #include <QtWidgets/qboxlayout.h>
 
 #include "gui/qrheader.h"
-#include "gui/qrnavigation.h"
 #include "gui/qrworkspace.h"
 #include "gui/qrstatusbar.h"
-#include "gui/qrframewindowsplitter.h"
 #include "gui/qrsystemtray.h"
+#include "gui/navigation/qrnavigation.h"
+#include "gui/qrframewindowsplitter.h"
 
 NS_CHAOS_BASE_BEGIN
 

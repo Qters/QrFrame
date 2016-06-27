@@ -1,12 +1,12 @@
-#include "gui/qrnavigation.h"
+#include "gui/navigation/qrnavigation.h"
 
 #include <QtCore/qdebug.h>
 #include <QtWidgets/qtabwidget.h>
 #include <QtWidgets/qboxlayout.h>
 #include <QtWidgets/qpushbutton.h>
 
-#include "gui/qrnavigationheader.h"
-#include "gui/qrnavigationtabpage.h"
+#include "gui/navigation/qrnavigationheader.h"
+#include "gui/navigation/qrnavigationtabpage.h"
 #include "db/qrtblnavigation.h"
 
 NS_CHAOS_BASE_BEGIN
