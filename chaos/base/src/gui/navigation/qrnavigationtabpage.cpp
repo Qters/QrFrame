@@ -100,7 +100,7 @@ void QrNavigationTabPagePrivate::connectConfigs()
         if (! index.isValid()) {
             return;
         }
-        auto item = this->data->itemFromIndex(index);
+        auto item = this->data->itemFromIndex(this->dataProxy->mapToSource(index));
         if (! this->dataItemMapBtn.contains(item)) {
             return ;
         }
