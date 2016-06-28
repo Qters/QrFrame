@@ -1,4 +1,4 @@
-#include "gui/qrworkspace.h"
+﻿#include "gui/qrworkspace.h"
 
 #include <QtCore/qmap.h>
 #include <QtCore/qdebug.h>
@@ -64,6 +64,7 @@ int QrWorkspace::appendTab(QWidget *widget, QString label)
     if (d->existedTabWidgets.contains(widget)) {
         qInfo() << label << " widget is exist. show previous widget.";
         auto preIndex = q->indexOf(d->existedTabWidgets[widget]);
+        q->setTabText(preIndex, label);
         q->setCurrentIndex(preIndex);
         return preIndex;
     }
