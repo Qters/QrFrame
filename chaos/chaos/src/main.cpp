@@ -1,11 +1,10 @@
-#include <QApplication>
+﻿#include <QApplication>
 #include <QtCore/qdebug.h>
 
 #include "core/qrframer.h"
 #include "db/qrframedb.h"
 
 #include "gui/qrchaosmainwindow.h"
-#include "gui/qrnavigation.h"
 
 USING_NS_QRFRAME;
 USING_NS_CHAOS_BASE;
