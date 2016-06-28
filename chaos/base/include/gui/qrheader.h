@@ -1,4 +1,4 @@
-#ifndef QRHEADER_H
+﻿#ifndef QRHEADER_H
 #define QRHEADER_H
 
 #include <QtWidgets/qframe.h>

@@ -1,4 +1,4 @@
-#include "gui/qrheader.h"
+﻿#include "gui/qrheader.h"
 
 #include <QtCore/qfile.h>
 #include <QtCore/qdebug.h>
@@ -11,6 +11,7 @@
 #include <QtGui/qevent.h>
 
 #include "db/qrtblframeconfig.h"
+#include "gui/qrheadermenu.h"
 
 NS_CHAOS_BASE_BEGIN
 
@@ -36,6 +37,7 @@ public:
     QToolButton *minimumButton = nullptr;
     QToolButton *restoreBtn = nullptr;
     QToolButton *closeButton = nullptr;
+    QrHeaderMenu *headerMenu = nullptr;
 };
 
 QrHeaderPrivate::QrHeaderPrivate(QrHeader *q) : q_ptr(q)
@@ -105,10 +107,17 @@ void QrHeaderPrivate::initUI() {
     topWidgetsLayout->addWidget(restoreBtn);
     topWidgetsLayout->addWidget(closeButton);
 
-    QHBoxLayout *mainLayout = new QHBoxLayout();
+    headerMenu = new QrHeaderMenu(q);
+    QHBoxLayout *bottomLayout = new QHBoxLayout();
+    bottomLayout->setContentsMargins(0, 0, 0, 7);
+    bottomLayout->setSpacing(10);
+    bottomLayout->addWidget(headerMenu);
+
+    QVBoxLayout *mainLayout = new QVBoxLayout();
     mainLayout->setContentsMargins(0, 0, 0, 0);
     mainLayout->setSpacing(0);
     mainLayout->addLayout(topWidgetsLayout);
+    mainLayout->addLayout(bottomLayout);
 
     q->setLayout(mainLayout);
 }
@@ -196,7 +205,7 @@ QrHeader::QrHeader(QWidget *parent)
     :QFrame(parent), d_ptr(new QrHeaderPrivate(this))
 {
     setWindowFlags(Qt::FramelessWindowHint);
-    setFixedHeight(62);
+    setFixedHeight(50);
 
     d_ptr->initUI();
     d_ptr->connectSignals();
