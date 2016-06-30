@@ -3,6 +3,7 @@
 
 #include "core/qrframer.h"
 #include "db/qrframedb.h"
+#include "entity/qrsqldatabase.h"
 
 #include "gui/qrchaosmainwindow.h"
 
@@ -13,8 +14,13 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
+    Qters::QrOrm::QrSqlDatabaseParams dbParam;
+    dbParam.driverName = "QSQLITE";
+    dbParam.folder = "data";
+    dbParam.databaseName = "chaos.db";
+
     QrFramerConfig frameConfig;
-    frameConfig.dbFolder = "data";
+    frameConfig.dbParams = dbParam;
     frameConfig.installLog = false;
 
     QrChaosMainwindow mwindow;

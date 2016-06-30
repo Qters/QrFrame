@@ -1,8 +1,9 @@
-#ifndef QRFRAME_H
+﻿#ifndef QRFRAME_H
 #define QRFRAME_H
 
 #include "qrglobal.h"
 #include "qrframe_global.h"
+#include "entity/qrsqldatabase.h"
 
 NS_QRFRAME_BEGIN
 
@@ -20,7 +21,7 @@ public:
     {}
 
     bool installLog;
-    QString dbFolder;
+    Qters::QrOrm::QrSqlDatabaseParams dbParams;
 };
 
 /*!

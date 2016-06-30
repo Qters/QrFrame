@@ -195,17 +195,16 @@ bool QrFramerPrivate::initServices() {
 
 bool QrFramerPrivate::initByConfig()
 {
+    QrFrameDb::getInstance()->setParams(frameConfig.dbParams);
+
     bool initSuc = true;
-
-    if (initSuc && ! frameConfig.dbFolder.isEmpty()) {
-        QrFrameDb::getInstance()->setFolderPath(frameConfig.dbFolder);
-    }
-
-    if (frameConfig.installLog) {   //  should do it first
+    if (frameConfig.installLog) {   //  should do it first after init database params
         initSuc = QrFramerPrivate::installLog();
     }
 
-    qInfo() << "frame database's folder is " << frameConfig.dbFolder;
+    qInfo() << "frame database's is "
+            << frameConfig.dbParams.folder
+            << "/" << frameConfig.dbParams.databaseName;
 
     return initSuc;
 }
