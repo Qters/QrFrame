@@ -24,6 +24,8 @@ public:
 public:
     bool loadSkin();
     void initUI();
+    void addBottomLayout(QVBoxLayout *mainLayout);
+    void addTopLayout(QVBoxLayout *mainLayout);
     void connectSignals();
     QMainWindow* getMainWindow();
     void switchMaxOrNormal(bool fullScrn);
@@ -76,8 +78,19 @@ void QrHeaderPrivate::switchMaxOrNormal(bool fullScrn)
 }
 
 void QrHeaderPrivate::initUI() {
-    Q_Q(QrHeader);
+    QVBoxLayout *mainLayout = new QVBoxLayout();
+    mainLayout->setContentsMargins(0, 0, 0, 0);
+    mainLayout->setSpacing(0);
 
+    addTopLayout(mainLayout);
+    addBottomLayout(mainLayout);
+
+    Q_Q(QrHeader);
+    q->setLayout(mainLayout);
+}
+
+void QrHeaderPrivate::addTopLayout(QVBoxLayout *mainLayout) {
+    Q_Q(QrHeader);
     skinButton = new QToolButton(q);
     skinButton->setToolTip(QObject::tr("skin"));
     skinButton->setToolButtonStyle(Qt::ToolButtonIconOnly);
@@ -97,29 +110,39 @@ void QrHeaderPrivate::initUI() {
     closeButton = new QToolButton(q);
     closeButton->setToolTip(QObject::tr("close"));
 
-    QHBoxLayout *topWidgetsLayout = new QHBoxLayout();
-    topWidgetsLayout->setContentsMargins(0, 0, 0, 0);
-    topWidgetsLayout->setSpacing(0);
-    topWidgetsLayout->addStretch();
-    topWidgetsLayout->addWidget(skinButton);
-    topWidgetsLayout->addWidget(minimumButton);
-    topWidgetsLayout->addWidget(maximumnButton);
-    topWidgetsLayout->addWidget(restoreBtn);
-    topWidgetsLayout->addWidget(closeButton);
+    QHBoxLayout *topLayout = new QHBoxLayout();
+    topLayout->setContentsMargins(0, 0, 0, 0);
+    topLayout->setSpacing(0);
+    topLayout->addStretch();
+    topLayout->addWidget(skinButton);
+    topLayout->addWidget(minimumButton);
+    topLayout->addWidget(maximumnButton);
+    topLayout->addWidget(restoreBtn);
+    topLayout->addWidget(closeButton);
 
-    headerMenu = new QrHeaderMenu(q);
+    mainLayout->addLayout(topLayout);
+}
+
+void QrHeaderPrivate::addBottomLayout(QVBoxLayout *mainLayout) {
+    static QString type = "gui";
+    static QString key = "quick_menu";
+
     QHBoxLayout *bottomLayout = new QHBoxLayout();
     bottomLayout->setContentsMargins(0, 0, 0, 7);
     bottomLayout->setSpacing(10);
-    bottomLayout->addWidget(headerMenu);
 
-    QVBoxLayout *mainLayout = new QVBoxLayout();
-    mainLayout->setContentsMargins(0, 0, 0, 0);
-    mainLayout->setSpacing(0);
-    mainLayout->addLayout(topWidgetsLayout);
+    Q_Q(QrHeader);
+    QString needQuickMenu;
+    if ( ! Qters::QrFrame::QrTblFrameConfigHelper::getValueBy(type, key, &needQuickMenu) ) {
+        needQuickMenu = "false";
+    }
+    if ("true" == needQuickMenu) {
+        headerMenu = new QrHeaderMenu(q);
+        bottomLayout->addWidget(headerMenu);
+        q->setFixedHeight(50);
+    }
+
     mainLayout->addLayout(bottomLayout);
-
-    q->setLayout(mainLayout);
 }
 
 bool QrHeaderPrivate::loadSkin() {
@@ -205,7 +228,7 @@ QrHeader::QrHeader(QWidget *parent)
     :QFrame(parent), d_ptr(new QrHeaderPrivate(this))
 {
     setWindowFlags(Qt::FramelessWindowHint);
-    setFixedHeight(50);
+    setFixedHeight(30);
 
     d_ptr->initUI();
     d_ptr->connectSignals();
