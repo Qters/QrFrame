@@ -1,10 +1,10 @@
-#include "gui/qrchaosmainwindow.h"
+﻿#include "gui/qrchaosmainwindow.h"
 
 #include <QtWidgets/qaction.h>
 #include <QtWidgets/qdesktopwidget.h>
 #include <QtWidgets/qapplication.h>
 
-#include "gui/qrframewindow.h"
+#include "gui/framewindow/qrframewindow.h"
 #include "gui/qrworkspace.h"
 #include "gui/qrstatusbar.h"
 

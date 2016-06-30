@@ -1,4 +1,4 @@
-#include "gui/qrframewindowsplitter.h"
+﻿#include "gui/framewindow/qrframewindowsplitter.h"
 
 #include <QtWidgets/qpushbutton.h>
 #include <QtWidgets/qboxlayout.h>

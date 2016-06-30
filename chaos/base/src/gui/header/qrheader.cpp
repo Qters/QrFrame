@@ -1,4 +1,4 @@
-﻿#include "gui/qrheader.h"
+﻿#include "gui/header/qrheader.h"
 
 #include <QtCore/qfile.h>
 #include <QtCore/qdebug.h>
@@ -11,7 +11,7 @@
 #include <QtGui/qevent.h>
 
 #include "db/qrtblframeconfig.h"
-#include "gui/qrheadermenu.h"
+#include "gui/header/qrheadermenu.h"
 
 NS_CHAOS_BASE_BEGIN
 

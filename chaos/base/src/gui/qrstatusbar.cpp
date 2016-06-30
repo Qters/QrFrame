@@ -1,10 +1,10 @@
-#include "gui/qrstatusbar.h"
+﻿#include "gui/qrstatusbar.h"
 
 #include <QtWidgets/qpushbutton.h>
 #include <QtWidgets/qboxlayout.h>
 
-#include "gui/qrframewindow.h"
-#include "gui/qrheader.h"
+#include "gui/framewindow/qrframewindow.h"
+#include "gui/header/qrheader.h"
 #include "gui/navigation/qrnavigation.h"
 
 

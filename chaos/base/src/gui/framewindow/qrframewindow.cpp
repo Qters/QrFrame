@@ -1,13 +1,13 @@
-﻿#include "gui/qrframewindow.h"
+﻿#include "gui/framewindow/qrframewindow.h"
 
 #include <QtWidgets/qboxlayout.h>
 
-#include "gui/qrheader.h"
+#include "gui/header/qrheader.h"
 #include "gui/qrworkspace.h"
 #include "gui/qrstatusbar.h"
 #include "gui/qrsystemtray.h"
 #include "gui/navigation/qrnavigation.h"
-#include "gui/qrframewindowsplitter.h"
+#include "gui/framewindow/qrframewindowsplitter.h"
 
 NS_CHAOS_BASE_BEGIN
 

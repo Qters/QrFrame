@@ -1,4 +1,4 @@
-﻿#include "gui/qrheadermenu.h"
+﻿#include "gui/header/qrheadermenu.h"
 
 #include <QtWidgets/qboxlayout.h>
 #include <QtWidgets/qtoolbar.h>
