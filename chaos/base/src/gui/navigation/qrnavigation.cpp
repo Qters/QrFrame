@@ -1,4 +1,4 @@
-#include "gui/navigation/qrnavigation.h"
+﻿#include "gui/navigation/qrnavigation.h"
 
 #include <QtCore/qdebug.h>
 #include <QtWidgets/qtabwidget.h>
@@ -8,6 +8,7 @@
 #include "gui/navigation/qrnavigationheader.h"
 #include "gui/navigation/qrnavigationtabpage.h"
 #include "db/qrtblnavigation.h"
+#include "db/qrtblframeconfig.h"
 
 NS_CHAOS_BASE_BEGIN
 
@@ -21,6 +22,8 @@ public:
 
 public:
     void loadUI();
+    void addTotalTabPage();
+    void addCustomTabPage();
     QPushButton *getButton(const QString &path);
 
 public:
@@ -46,11 +49,8 @@ QrNavigationPrivate *QrNavigationPrivate::dInstance(){
     return QrNavigationPrivate::qInstance->d_func();
 }
 
-void QrNavigationPrivate::loadUI()
-{
+void QrNavigationPrivate::addTotalTabPage(){
     Q_Q(QrNavigation);
-    header = new QrNavigationHeader(q);
-
     QrTblNavigationHelper tblNavigationHelper;
     totalTabPage = new QrNavigationTabPage(q);
     QObject::connect(totalTabPage, &QrNavigationTabPage::addButton,
@@ -68,11 +68,32 @@ void QrNavigationPrivate::loadUI()
     });
     this->header->navigationModelProxy(totalTabPage->modelProxy()); //  default
 
-    customTabPage = new QrNavigationTabPage(q);
+    navigationTab->addTab(totalTabPage, "Total");
+}
+
+void QrNavigationPrivate::addCustomTabPage(){
+    static QString type = "gui";
+    static QString key = "custom_nav";
+
+    Q_Q(QrNavigation);
+    QString needCusttomNavigation;
+    if ( ! Qters::QrFrame::QrTblFrameConfigHelper::getValueBy(type, key, &needCusttomNavigation) ) {
+        needCusttomNavigation = "false";
+    }
+    if ( "true" == needCusttomNavigation ) {
+        customTabPage = new QrNavigationTabPage(q);
+        navigationTab->addTab(customTabPage, "Custom");
+    }
+}
+
+void QrNavigationPrivate::loadUI()
+{
+    Q_Q(QrNavigation);
+    header = new QrNavigationHeader(q);
 
     navigationTab = new QTabWidget(q);
-    navigationTab->addTab(totalTabPage, "Total");
-    navigationTab->addTab(customTabPage, "Custom");
+    addTotalTabPage();
+    addCustomTabPage();
 
     QVBoxLayout* mainLayout = new QVBoxLayout();
     mainLayout->setContentsMargins(0,0,0,0);
@@ -85,7 +106,6 @@ void QrNavigationPrivate::loadUI()
         auto curNavTab = qobject_cast<QrNavigationTabPage*>(this->navigationTab->widget(index));
         this->header->navigationModelProxy(curNavTab->modelProxy());
     });
-
 
     QObject::connect(this->header, &QrNavigationHeader::beginSearch, [this](){
         qobject_cast<QrNavigationTabPage*>(navigationTab->currentWidget())->expandAll();
