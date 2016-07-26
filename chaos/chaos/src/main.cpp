@@ -4,15 +4,22 @@
 #include "core/qrframer.h"
 #include "db/qrframedb.h"
 #include "entity/qrsqldatabase.h"
+#include "qrrunguard.h"
 
 #include "gui/qrchaosmainwindow.h"
 
+USING_NS_QRCOMMON;
 USING_NS_QRFRAME;
 USING_NS_CHAOS_BASE;
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+    QrRunGuard guard("qters.farme.chaos.v1");
+    if ( !guard.tryToRun() ) {
+        return 0;
+    }
+
+    QApplication app(argc, argv);
 
     Qters::QrOrm::QrSqlDatabaseParams dbParam;
     dbParam.driverName = "QSQLITE";
@@ -30,5 +37,5 @@ int main(int argc, char *argv[])
     framer.setMainWindow(&mwindow);
     framer.start();
 
-    return a.exec();
+    return app.exec();
 }
