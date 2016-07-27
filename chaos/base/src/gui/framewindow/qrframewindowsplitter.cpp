@@ -9,10 +9,19 @@ class QrFrameWindowSplitterPrivate{
     QR_DECLARE_PUBLIC(QrFrameWindowSplitter)
 
 public:
-    QrFrameWindowSplitterPrivate(QrFrameWindowSplitter *q)
+    QrFrameWindowSplitterPrivate(QrFrameWindowSplitter *q);
+    void setQssObjectNames(){
+        handleBtn->setObjectName("QrFrameWindowSplitter_handleBtn");
+    }
+
+public:
+    QPushButton *handleBtn;
+};
+
+QrFrameWindowSplitterPrivate::QrFrameWindowSplitterPrivate(QrFrameWindowSplitter *q)
     : q_ptr(q) {}
 
-};
+
 
 NS_CHAOS_BASE_END
 
@@ -33,9 +42,10 @@ void QrFrameWindowSplitter::initHandle(int index)
         return;
     }
 
-    auto handleBtn = new QPushButton(handle);
-    handleBtn->setCursor(Qt::PointingHandCursor);
-    connect(handleBtn,&QPushButton::clicked, [this,index,handleBtn](){
+    Q_D(QrFrameWindowSplitter);
+    d->handleBtn = new QPushButton(handle);
+    d->handleBtn->setCursor(Qt::PointingHandCursor);
+    connect(d->handleBtn,&QPushButton::clicked, [this, index](){
         if(0 == this->sizes().at(0)) {
              this->setSizes(QList<int>()<<this->widget(index)->width() << this->widget(index)->width());
         } else {
@@ -46,7 +56,7 @@ void QrFrameWindowSplitter::initHandle(int index)
     auto layout = new QVBoxLayout();
     layout->setContentsMargins(0,0,0,0);
     layout->setSpacing(0);
-    layout->addWidget(handleBtn);
+    layout->addWidget(d->handleBtn);
 
     handle->setLayout(layout);
 }

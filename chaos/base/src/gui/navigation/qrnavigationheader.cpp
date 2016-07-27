@@ -17,6 +17,7 @@ public:
 
 public:
     void loadUI();
+    void setQssObjectNames();
 
 public:
     QPushButton* autoHide = nullptr;
@@ -49,6 +50,12 @@ void QrNavigationHeaderPrivate::loadUI()
     mainLayout->addWidget(search, 0, Qt::AlignLeft);
     mainLayout->addWidget(autoHide, 0, Qt::AlignRight);
     q->setLayout(mainLayout);
+}
+
+void QrNavigationHeaderPrivate::setQssObjectNames()
+{
+    autoHide->setObjectName("QrNavigationHeader_autohide");
+    search->setObjectName("QrNavigationHeader_search");
 }
 
 NS_CHAOS_BASE_END

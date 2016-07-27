@@ -12,6 +12,8 @@ USING_NS_QRCOMMON;
 USING_NS_QRFRAME;
 USING_NS_CHAOS_BASE;
 
+#include <qfile.h>
+
 int main(int argc, char *argv[])
 {
     QrRunGuard guard("qters.farme.chaos.v1");
@@ -29,6 +31,14 @@ int main(int argc, char *argv[])
     QrFramerConfig frameConfig;
     frameConfig.dbParams = dbParam;
     frameConfig.installLog = false;
+
+    QFile qssFile("blue.qss");
+    if(qssFile.open(QIODevice::ReadOnly))
+    {
+        QString styleSheet = QLatin1String(qssFile.readAll());
+        qDebug()<<styleSheet;
+        app.setStyleSheet(styleSheet);
+    }
 
     QrChaosMainwindow mwindow;
 

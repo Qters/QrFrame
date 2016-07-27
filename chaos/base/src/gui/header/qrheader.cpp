@@ -30,6 +30,7 @@ public:
     QMainWindow* getMainWindow();
     void switchMaxOrNormal(bool fullScrn);
     void connectPressSignal(QAbstractButton *toolButton);
+    void setQssObjectNames();
 
 public:
     bool clickOnButton = false;
@@ -219,6 +220,17 @@ void QrHeaderPrivate::connectPressSignal(QAbstractButton *toolButton)
     });
 }
 
+void QrHeaderPrivate::setQssObjectNames() {
+    Q_Q(QrHeader);
+    q->setObjectName("QrHeader");
+
+    skinButton->setObjectName("QrHeader_skinButton");
+    maximumnButton->setObjectName("QrHeader_maximumnButton");
+    minimumButton->setObjectName("QrHeader_minimumButton");
+    restoreBtn->setObjectName("QrHeader_restoreBtn");
+    closeButton->setObjectName("QrHeader_closeButton");
+}
+
 NS_CHAOS_BASE_END
 
 
@@ -232,6 +244,7 @@ QrHeader::QrHeader(QWidget *parent)
 
     d_ptr->initUI();
     d_ptr->connectSignals();
+    d_ptr->setQssObjectNames();
 }
 
 void QrHeader::mousePressEvent(QMouseEvent *event)

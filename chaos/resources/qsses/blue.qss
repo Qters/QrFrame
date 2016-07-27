@@ -1,0 +1,184 @@
+/*	Golbal Begin */
+
+QToolButton{
+	border:none;
+	background-repeat:no-repeat;	
+	background-position: center;
+}
+
+QPushButton{	
+	background-repeat:no-repeat;
+	background-position: center;
+}
+
+QTabBar::close-button{
+	background-repeat:no-repeat;	
+	background-position: center;
+}
+
+QSplitter::handle:horizontal{
+	width:5px;
+	background-image: url(:/navigation/images/blue/navigation/splitter_def.png);
+}
+QSplitter::handle:hover{
+	background-image: url(:/navigation/images/blue/navigation/splitter_hov.png);
+}
+QSplitter::handle:pressed{
+	background-image: url(:/navigation/images/blue/navigation/splitter_clk.png);
+}
+
+/*	Golbal End */
+
+/*----------------------------------------------------*/
+
+/*	Custom Begin */
+
+/*	Header BEGIN */
+
+QFrame#QrHeader {
+	height:30px;
+	background-color: #3E7ABC;
+}
+
+/*	Header-Skin Begin */
+QToolButton#QrHeader_skinButton{
+	width:30px;
+	height:23px;
+	background-image: url(:/header/images/blue/header/setting_def.png);
+}
+QToolButton#QrHeader_skinButton::menu-indicator { 
+	image: none; 
+} 
+QToolButton#QrHeader_skinButton:hover{
+	background-image: url(:/header/images/blue/header/setting_hov.png);
+}
+QToolButton#QrHeader_skinButton:pressed{
+	background-image: url(:/header/images/blue/header/setting_clk.png);
+}
+/*	Header-Skin End */
+
+/*	Header-Maximum Begin */
+QToolButton#QrHeader_maximumnButton{
+	width:30px;
+	height:23px;
+	background-image: url(:/header/images/blue/header/max_def.png);
+}
+QToolButton#QrHeader_maximumnButton:hover{
+	background-image: url(:/header/images/blue/header/max_hov.png);
+}
+QToolButton#QrHeader_maximumnButton:pressed{
+	background-image: url(:/header/images/blue/header/max_clk.png);
+}
+/*	Header-Maximum End */
+
+/*	Header-Restore-Normal-Size Begin */
+QToolButton#QrHeader_restoreBtn{
+	width:30px;
+	height:23px;
+	background-image: url(:/header/images/blue/header/restore_size_def.png);
+}
+QToolButton#QrHeader_restoreBtn:hover{
+	background-image: url(:/header/images/blue/header/restore_size_hov.png);
+}
+QToolButton#QrHeader_restoreBtn:pressed{
+	background-image: url(:/header/images/blue/header/restore_size_clk.png);
+}
+/*	Header-Restore-Normal-Size Begin */
+
+/*	Header-Minimum Begin */
+QToolButton#QrHeader_minimumButton{
+	width:30px;
+	height:23px;
+	background-image: url(:/header/images/blue/header/min_def.png);
+}
+QToolButton#QrHeader_minimumButton:hover{
+	background-image: url(:/header/images/blue/header/min_hov.png);
+}
+QToolButton#QrHeader_minimumButton:pressed{
+	background-image: url(:/header/images/blue/header/min_clk.png);
+}
+/*	Header-Minimum End */
+
+/*	Header-Close Begin */
+QToolButton#QrHeader_closeButton{
+	width:30px;
+	height:23px;
+	background-image: url(:/header/images/blue/header/close_def.png);
+}
+QToolButton#QrHeader_closeButton:hover{
+	background-image: url(:/header/images/blue/header/close_hov.png);
+}
+QToolButton#QrHeader_closeButton:pressed{
+	background-image: url(:/header/images/blue/header/close_clk.png);
+}
+/*	Header-Close End */
+
+/*	Header End */
+
+/*	Framewindow Begin */
+
+QPushButton#QrFrameWindowSplitter_handleBtn
+{
+	border:none;
+	width:5px;
+	height:64px;
+}		
+
+/*	Framewindow End */
+
+
+/*	Navigation Begin */
+
+QLineEdit#QrNavigationHeader_search{
+	height:27px;
+	background-repeat:no-repeat;
+	background-color:#98BADD;
+}
+
+QTreeView#QrNavigationTabView{
+	background-color:#DFE8F1;
+    border:none;
+	/*show-decoration-selected:1;*/
+}
+
+QTreeView::branch{
+	image:none;
+}
+
+QTreeView::item{
+	height:28px;
+}
+
+QTreeView::item:hover{
+	background-color:#9AC7F6;
+}
+
+QTreeView::item:selected{
+	background-color:#3E7ABC;
+}
+
+QTreeView::branch:has-children:!has-siblings:closed,
+QTreeView::branch:closed:has-children:has-siblings {
+    border-image: none;
+    image: url(:/navigation/images/blue/navigation/arrow_close.png);
+}
+
+QTreeView::branch:open:has-children:!has-siblings,
+QTreeView::branch:open:has-children:has-siblings {
+    border-image: none;
+    image: url(:/navigation/images/blue/navigation/arrow_open.png);
+}
+
+/*	Navigation End */
+
+
+/*	Workspace Begin */
+
+
+/*	Workspace End */
+
+
+/*	Statusbar Begin */
+
+
+/*	Statusbar End */

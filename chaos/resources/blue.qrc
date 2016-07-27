@@ -1,0 +1,30 @@
+<RCC>
+    <qresource prefix="/header">
+        <file>images/blue/header/close_clk.png</file>
+        <file>images/blue/header/close_def.png</file>
+        <file>images/blue/header/close_hov.png</file>
+        <file>images/blue/header/max_clk.png</file>
+        <file>images/blue/header/max_def.png</file>
+        <file>images/blue/header/max_hov.png</file>
+        <file>images/blue/header/min_clk.png</file>
+        <file>images/blue/header/min_def.png</file>
+        <file>images/blue/header/min_hov.png</file>
+        <file>images/blue/header/restore_size_clk.png</file>
+        <file>images/blue/header/restore_size_def.png</file>
+        <file>images/blue/header/restore_size_hov.png</file>
+        <file>images/blue/header/setting_clk.png</file>
+        <file>images/blue/header/setting_def.png</file>
+        <file>images/blue/header/setting_hov.png</file>
+    </qresource>
+    <qresource prefix="/navigation">
+        <file>images/blue/navigation/auto_hide_clk.png</file>
+        <file>images/blue/navigation/auto_hide_def.png</file>
+        <file>images/blue/navigation/auto_hide_hov.png</file>
+        <file>images/blue/navigation/splitter_close_clk.png</file>
+        <file>images/blue/navigation/splitter_close_def.png</file>
+        <file>images/blue/navigation/splitter_close_hov.png</file>
+        <file>images/blue/navigation/splitter_open_clk.png</file>
+        <file>images/blue/navigation/splitter_open_def.png</file>
+        <file>images/blue/navigation/splitter_open_hov.png</file>
+    </qresource>
+</RCC>
