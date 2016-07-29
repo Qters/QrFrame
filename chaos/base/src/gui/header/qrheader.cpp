@@ -3,6 +3,7 @@
 #include <QtCore/qfile.h>
 #include <QtCore/qdebug.h>
 #include <QtCore/qtextstream.h>
+#include <QtCore/qsettings.h>
 #include <QtWidgets/qapplication.h>
 #include <QtWidgets/qmainwindow.h>
 #include <QtWidgets/qtoolbutton.h>
@@ -12,6 +13,7 @@
 
 #include "db/qrtblframeconfig.h"
 #include "gui/header/qrheadermenu.h"
+#include "gui/qrstyle.h"
 
 NS_CHAOS_BASE_BEGIN
 
@@ -22,7 +24,7 @@ public:
     QrHeaderPrivate(QrHeader *q);
 
 public:
-    bool loadSkin();
+    bool loadSkinInfo();
     void initUI();
     void addBottomLayout(QVBoxLayout *mainLayout);
     void addTopLayout(QVBoxLayout *mainLayout);
@@ -96,7 +98,7 @@ void QrHeaderPrivate::addTopLayout(QVBoxLayout *mainLayout) {
     skinButton->setToolTip(QObject::tr("skin"));
     skinButton->setToolButtonStyle(Qt::ToolButtonIconOnly);
     skinButton->setPopupMode(QToolButton::InstantPopup);
-    loadSkin();
+    loadSkinInfo();
 
     minimumButton = new QToolButton(q);
     minimumButton->setToolTip(QObject::tr("minimum"));
@@ -146,38 +148,20 @@ void QrHeaderPrivate::addBottomLayout(QVBoxLayout *mainLayout) {
     mainLayout->addLayout(bottomLayout);
 }
 
-bool QrHeaderPrivate::loadSkin() {
-    static const QString dbSkinType = "skin";
-    static const QString dbKey = "qsses";
-    QString qsses;
-    if (! Qters::QrFrame::QrTblFrameConfigHelper::getValueBy(dbSkinType, dbKey, &qsses)) {
-        return false;
-    }
+bool QrHeaderPrivate::loadSkinInfo() {
+    QVector<QrQssData> skinDatas = QrStyle::getSkinDataInDB();
 
     QMenu *skinMenu = new QMenu();
-    Q_FOREACH(auto qss, qsses.split(';')) {
-        auto qssProps = qss.split(',');
-        if (2 != qssProps.size()) {
-            qWarning() << "qss property in database in unrecognized." << qssProps;
-            continue;
-        }
-        auto action = new QAction(qssProps.at(0), skinMenu);
-        action->setData(qssProps.at(1));    //  qss file path
+    Q_FOREACH(QrQssData skinData, skinDatas) {
+        auto action = new QAction(skinData.skinName, skinMenu);
+        action->setData(skinData.skinIndex);
         skinMenu->addAction(action);
     }
     skinButton->setMenu(skinMenu);
 
-    QObject::connect(skinMenu, &QMenu::triggered, [](QAction *action){
-        QFile qssFile(action->data().toString());
-        if (!qssFile.exists()) {
-            qDebug() << "Unable to set stylesheet, file not found"
-                     << action->text()
-                     << action->data().toString() ;
-        } else {
-            qssFile.open(QFile::ReadOnly | QFile::Text);
-            QTextStream ts(&qssFile);
-            qApp->setStyleSheet(ts.readAll());
-        }
+    QObject::connect(skinMenu, &QMenu::triggered, [](QAction *action){  //  TODO抽象全局类方法
+        QrStyle::loadSkin(static_cast<QrStyle::SkinIndex>(
+                              action->data().toInt()));
     });
 
     return true;

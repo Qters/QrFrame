@@ -26,5 +26,8 @@
         <file>images/blue/navigation/splitter_open_clk.png</file>
         <file>images/blue/navigation/splitter_open_def.png</file>
         <file>images/blue/navigation/splitter_open_hov.png</file>
+        <file>images/blue/navigation/splitter_clk.png</file>
+        <file>images/blue/navigation/splitter_def.png</file>
+        <file>images/blue/navigation/splitter_hov.png</file>
     </qresource>
 </RCC>
