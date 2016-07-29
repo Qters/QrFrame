@@ -6,19 +6,7 @@
 
 //NS_CHAOS_BASE_BEGIN
 
-namespace Qters {
-namespace QrFrame {
-namespace QrChaos {
-namespace QrBase {
-
-
-
-class Q_DECL_EXPORT ASWWWWS{
-
-};
-class      CHAOSBASE_SHAREDEXPORT      ASS{
-
-};
+NS_CHAOS_BASE_BEGIN
 
 class QrSystemTrayPrivate;
 class CHAOSBASE_SHAREDEXPORT QrSystemTray
