@@ -35,11 +35,11 @@ public:
     QrFramer();
 
 public:
-    bool start();
     void setConfig(const QrFramerConfig& config);
     void setMainWindow(QrMainWindow *mainwindow);
 
 public:
+    virtual bool start();
     virtual bool loadFramework();
     virtual bool initFramework();
 };
