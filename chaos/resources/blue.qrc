@@ -30,4 +30,7 @@
         <file>images/blue/navigation/splitter_def.png</file>
         <file>images/blue/navigation/splitter_hov.png</file>
     </qresource>
+    <qresource prefix="/qss">
+        <file>qsses/blue.qss</file>
+    </qresource>
 </RCC>

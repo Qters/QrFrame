@@ -149,17 +149,25 @@ void QrHeaderPrivate::addBottomLayout(QVBoxLayout *mainLayout) {
 }
 
 bool QrHeaderPrivate::loadSkinInfo() {
+    const int curSkinIndex = static_cast<int>(QrStyle::curSkinIndex());
     QVector<QrQssData> skinDatas = QrStyle::getSkinDataInDB();
 
+    Q_Q(QrHeader);
     QMenu *skinMenu = new QMenu();
+    QActionGroup *skinActions = new QActionGroup(skinMenu);
     Q_FOREACH(QrQssData skinData, skinDatas) {
-        auto action = new QAction(skinData.skinName, skinMenu);
+        auto action = skinActions->addAction(
+                    skinMenu->addAction(skinData.skinName));
         action->setData(skinData.skinIndex);
-        skinMenu->addAction(action);
+        action->setCheckable(true);
+
+        if (skinData.skinIndex == curSkinIndex) {
+            action->setChecked(true);
+        }
     }
     skinButton->setMenu(skinMenu);
 
-    QObject::connect(skinMenu, &QMenu::triggered, [](QAction *action){  //  TODO抽象全局类方法
+    QObject::connect(skinActions, &QActionGroup::triggered, [](QAction *action){
         QrStyle::loadSkin(static_cast<QrStyle::SkinIndex>(
                               action->data().toInt()));
     });
