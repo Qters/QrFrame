@@ -1,5 +1,6 @@
 #include "gui/qrstyle.h"
 
+#include <QtCore/qdebug.h>
 #include <QtCore/qfile.h>
 #include <QtCore/qtextstream.h>
 #include <QtWidgets/qapplication.h>
@@ -11,7 +12,7 @@ NS_CHAOS_BASE_BEGIN
 
 class QrStylePrivate{
 public:
-    QVector<QrQssData> qssDbData;
+    static QVector<QrQssData> qssDbData;
 
 public:
     static bool loadQss(const QString& qssFileName);
@@ -54,7 +55,7 @@ QrStyle::SkinIndex QrStyle::curSkinIndex()
     return static_cast<SkinIndex>(
                 settings.value(
                     QrStyle::Key_SkinIndex,
-                    static_cast<int>(SkinIndex::Default).toInt()));
+                    static_cast<int>(SkinIndex::Default)).toInt());
 }
 
 bool QrStyle::initSkin()
@@ -83,20 +84,22 @@ const QVector<QrQssData>& QrStyle::getSkinDataInDB(bool clear /*= false*/)
             qWarning() << "qss property in database in unrecognized." << qssProps;
             continue;
         }
-        QrStylePrivate::qssDbData.push_back(QrQssData{
-                              qssProps.at(0),
-                              qssProps.at(1),
-                              qssProps.at(2)
-                          });
+
+        QrQssData qdddata;
+        qdddata.skinIndex = qssProps.at(0).toInt();
+        qdddata.skinName = qssProps.at(1);
+        qdddata.skinQssFileName = qssProps.at(2);
+
+        QrStylePrivate::qssDbData.push_back(qdddata);
     }
 
     return QrStylePrivate::qssDbData;
 }
 
 bool QrStyle::loadSkin(SkinIndex skinIndex) {
-    QrQssData qssDatas = QrStyle::getSkinDataInDB();
+    auto qssDatas = QrStyle::getSkinDataInDB();
 
-    Q_FOREACH(QrQssData qssData, qssDatas) {
+    Q_FOREACH(auto qssData, qssDatas) {
         if (skinIndex != static_cast<SkinIndex>(qssData.skinIndex)){
             continue;
         }
