@@ -56,6 +56,7 @@ void QrFrameWindowPrivate::loadUI()
     splitter->initHandle(1);
 
     statusbar = new QrStatusBar(q);
+    statusbar->setObjectName("framewindow_statusbar");
 
     QVBoxLayout* mainLayout = new QVBoxLayout(q);
     mainLayout->setContentsMargins(0,0,0,0);

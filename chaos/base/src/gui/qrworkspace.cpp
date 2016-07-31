@@ -4,6 +4,7 @@
 #include <QtCore/qdebug.h>
 #include <QtWidgets/qwidget.h>
 #include <QtWidgets/qscrollarea.h>
+#include <QtWidgets/qtabbar.h>
 
 NS_CHAOS_BASE_BEGIN
 
@@ -42,6 +43,7 @@ USING_NS_CHAOS_BASE;
 QrWorkspace::QrWorkspace(QWidget *parent)
     :QTabWidget(parent), d_ptr(new QrWorkspacePrivate(this))
 {
+    tabBar()->setObjectName("workspace_tabbar");
     setTabsClosable(true);
 
     connect(this, &QrWorkspace::tabCloseRequested, [this](int index){

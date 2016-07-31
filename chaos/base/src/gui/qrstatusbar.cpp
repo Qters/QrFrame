@@ -41,8 +41,11 @@ void QrStatusBarPrivate::loadUI()
 {
     Q_Q(QrStatusBar);
     normalMode = new QPushButton(q);
+    normalMode->setObjectName("statusbar_normalmode");
     simpleMode = new QPushButton(q);
+    simpleMode->setObjectName("statusbar_simplemode");
     fullScreenMode = new QPushButton(q);
+    fullScreenMode->setObjectName("statusbar_fullmode");
 
     auto displayModeLayout = new QHBoxLayout();
     displayModeLayout->setContentsMargins(0,0,0,0);

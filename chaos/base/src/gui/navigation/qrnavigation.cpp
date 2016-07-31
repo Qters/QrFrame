@@ -4,6 +4,7 @@
 #include <QtWidgets/qtabwidget.h>
 #include <QtWidgets/qboxlayout.h>
 #include <QtWidgets/qpushbutton.h>
+#include <QtWidgets/qtabbar.h>
 
 #include "gui/navigation/qrnavigationheader.h"
 #include "gui/navigation/qrnavigationtabpage.h"
@@ -92,6 +93,8 @@ void QrNavigationPrivate::loadUI()
     header = new QrNavigationHeader(q);
 
     navigationTab = new QTabWidget(q);
+    navigationTab->tabBar()->setObjectName("navigation_bar");
+
     addTotalTabPage();
     addCustomTabPage();
 

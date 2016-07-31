@@ -38,6 +38,7 @@ void QrNavigationTabPagePrivate::loadUI()
     Q_Q(QrNavigationTabPage);
     view = new QrNavigationTabView(q);
     view->setObjectName("navigationTabPage_view");
+
     data = new QStandardItemModel(view);
     dataProxy = new QrNavigationFilterProxyModel(view);
     dataProxy->setSourceModel(data);

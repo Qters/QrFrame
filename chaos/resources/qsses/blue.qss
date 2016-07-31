@@ -25,9 +25,10 @@ QToolButton {
 	Custom  
 ----------------------------------------------------*/
 
-/*Begin
+
+/*BEGIN
 ----------------------------------------------------
-	Framewindow
+	Header
 ----------------------------------------------------*/
 
 /*header*/
@@ -35,57 +36,6 @@ QFrame#framewindow_header {
 	height:30px;
 	background-color: #3E7ABC;
 }
-
-
-/*spiliter*/
-/*
-QSplitter#framewindow_spliter::handle:horizontal {
-	width:1px;
-	background-image: url(:/navigation/images/blue/navigation/splitter_def.png);
-}
-QSplitter#framewindow_spliter::handle:hover {
-	background-image: url(:/navigation/images/blue/navigation/splitter_hov.png);
-}
-QSplitter#framewindow_spliter::handle:pressed {
-	background-image: url(:/navigation/images/blue/navigation/splitter_clk.png);
-}
-*/
-
-/*spiliter handle button*/
-QPushButton#frameWindowSplitter_handleBtn {
-	border:none;
-	width:5px;
-	height:80px;
-}
-QPushButton#frameWindowSplitter_handleBtn[opened="false"] { 
-	background-image: url(:/navigation/images/blue/navigation/splitter_open_def.png);
-}
-QPushButton#frameWindowSplitter_handleBtn[opened="false"]:hover { 
-	background-image: url(:/navigation/images/blue/navigation/splitter_open_hov.png);
-}
-QPushButton#frameWindowSplitter_handleBtn[opened="false"]:pressed { 
-	background-image: url(:/navigation/images/blue/navigation/splitter_open_clk.png) ;
-}
-QPushButton#frameWindowSplitter_handleBtn[opened="true"] { 
-	background-image: url(:/navigation/images/blue/navigation/splitter_close_def.png);
-}
-QPushButton#frameWindowSplitter_handleBtn[opened="true"]:hover { 
-	background-image: url(:/navigation/images/blue/navigation/splitter_close_hov.png);
-}
-QPushButton#frameWindowSplitter_handleBtn[opened="true"]:pressed { 
-	background-image: url(:/navigation/images/blue/navigation/splitter_close_clk.png) ;
-}
-                      
-
-/*
-----------------------------------------------------
-	Framewindow
-----------------------------------------------------End*/
-
-/*BEGIN
-----------------------------------------------------
-	Header
-----------------------------------------------------*/
 
 /*skin button*/
 QToolButton#header_skinButton{
@@ -159,6 +109,7 @@ QToolButton#header_closeButton:pressed{
 	background-image: url(:/header/images/blue/header/close_clk.png);
 }
 
+/*
 ----------------------------------------------------
 	Header
 ----------------------------------------------------End*/
@@ -169,43 +120,52 @@ QToolButton#header_closeButton:pressed{
 	Navigation
 ----------------------------------------------------*/
 /**/
+QTabBar::tab#navigation_bar {
+	height:30px;
+	width:79px;
+	border:none;
+}
+
+QTabBar::tab#navigation_bar:selected {
+	background-color:#3E7ABC;
+}
+
 QLineEdit#navigationHeader_search{
 	height:27px;
 	background-repeat:no-repeat;
 	background-color:#98BADD;
 }
 
-/*tab*/
-QTreeView#navigationTabPage_view{
+/*navigtaion tree*/
+QTreeView#navigationTabPage_view {
 	background-color:#DFE8F1;
     border:none;
-	/*show-decoration-selected:1;*/
 }
 
-QTreeView#navigationTabPage_view::branch{
+QTreeView#navigationTabPage_view::branch {
 	image:none;
 }
 
-QTreeView#navigationTabPage_view::item{
+QTreeView#navigationTabPage_view::item {
 	height:28px;
 }
 
-QTreeView#navigationTabPage_view::item:hover{
+QTreeView#navigationTabPage_view::item:hover {
 	background-color:#9AC7F6;
 }
 
-QTreeView#navigationTabPage_view::item:selected{
+QTreeView#navigationTabPage_view::item:selected {
 	background-color:#3E7ABC;
 }
 
-QTreeView#navigationTabPage_view::branch:has-children:!has-siblings:closed,
-QTreeView#navigationTabPage_view::branch:closed:has-children:has-siblings {
+QTreeView::branch:has-children:!has-siblings:closed,
+QTreeView::branch:closed:has-children:has-siblings {
     border-image: none;
     image: url(:/navigation/images/blue/navigation/arrow_close.png);
 }
 
-QTreeView#navigationTabPage_view::branch:open:has-children:!has-siblings,
-QTreeView#navigationTabPage_view::branch:open:has-children:has-siblings {
+QTreeView::branch:open:has-children:!has-siblings,
+QTreeView::branch:open:has-children:has-siblings {
     border-image: none;
     image: url(:/navigation/images/blue/navigation/arrow_open.png);
 }
@@ -216,11 +176,70 @@ Navigation
 ----------------------------------------------------End*/
 
 
+
+/*Begin
+----------------------------------------------------
+	Spiliter
+----------------------------------------------------*/
+
+
+/*spiliter*/
+QSplitter#framewindow_spliter::handle:horizontal {
+	width:1px;
+	background-image: url(:/navigation/images/blue/navigation/splitter_def.png);
+}
+QSplitter#framewindow_spliter::handle:hover {
+	background-image: url(:/navigation/images/blue/navigation/splitter_hov.png);
+}
+QSplitter#framewindow_spliter::handle:pressed {
+	background-image: url(:/navigation/images/blue/navigation/splitter_clk.png);
+}
+
+/*spiliter handle button*/
+QPushButton#frameWindowSplitter_handleBtn {
+	border:none;
+	width:5px;
+	height:80px;
+}
+QPushButton#frameWindowSplitter_handleBtn[opened="false"] { 
+	background-image: url(:/navigation/images/blue/navigation/splitter_open_def.png);
+}
+QPushButton#frameWindowSplitter_handleBtn[opened="false"]:hover { 
+	background-image: url(:/navigation/images/blue/navigation/splitter_open_hov.png);
+}
+QPushButton#frameWindowSplitter_handleBtn[opened="false"]:pressed { 
+	background-image: url(:/navigation/images/blue/navigation/splitter_open_clk.png) ;
+}
+QPushButton#frameWindowSplitter_handleBtn[opened="true"] { 
+	background-image: url(:/navigation/images/blue/navigation/splitter_close_def.png);
+}
+QPushButton#frameWindowSplitter_handleBtn[opened="true"]:hover { 
+	background-image: url(:/navigation/images/blue/navigation/splitter_close_hov.png);
+}
+QPushButton#frameWindowSplitter_handleBtn[opened="true"]:pressed { 
+	background-image: url(:/navigation/images/blue/navigation/splitter_close_clk.png) ;
+}
+                      
+
+/*
+----------------------------------------------------
+	Spiliter
+----------------------------------------------------End*/
+
 /*Begin
 ----------------------------------------------------
 	Workspace
 ----------------------------------------------------*/
+QTabBar#workspace_tabbar::tab { 
+	width : 150px;
+}
+QTabBar#workspace_tabbar::close-button {
+	image: url(:/workspace/images/blue/workspace/tabclose_def.png);
+}
 
+QTabBar#workspace_tabbar::close-button:hover  {
+	image: url(:/workspace/images/blue/workspace/tabclose_clk.png);
+}
 
 /*
 ----------------------------------------------------
@@ -232,7 +251,24 @@ Navigation
 ----------------------------------------------------
 	Statusbar
 ----------------------------------------------------*/
+QStatusBar#framewindow_statusbar QPushButton {
+	background-color:transparent;
+}
 
+QPushButton#statusbar_normalmode {
+	background-image: url(:/statusbar/images/blue/status_bar/normal_def.png);
+}
+QPushButton#statusbar_normalmode:hover {
+	background-image: url(:/statusbar/images/blue/status_bar/normal_hover.png);
+}
+
+QPushButton#statusbar_simplemode {
+	background-image: url(:/statusbar/images/blue/status_bar/simple_mode.png);
+}
+
+QPushButton#statusbar_fullmode {
+	background-image: url(:/statusbar/images/blue/status_bar/full_mode.png);
+}
 
 /*
 ----------------------------------------------------

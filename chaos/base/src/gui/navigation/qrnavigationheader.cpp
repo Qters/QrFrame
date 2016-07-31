@@ -19,7 +19,7 @@ public:
     void loadUI();
 
 public:
-    QPushButton* autoHide = nullptr;
+//    QPushButton* autoHide = nullptr;
     QLineEdit* search = nullptr;
     QrNavigationFilterProxyModel *filterProxy;
 };
@@ -27,10 +27,10 @@ public:
 void QrNavigationHeaderPrivate::loadUI()
 {
     Q_Q(QrNavigationHeader);
-    autoHide = new QPushButton(q);
-    autoHide->setObjectName("navigationHeader_autohide");
-    autoHide->setCursor(Qt::PointingHandCursor);
-    autoHide->setToolTip("auto hide");
+//    autoHide = new QPushButton(q);
+//    autoHide->setObjectName("navigationHeader_autohide");
+//    autoHide->setCursor(Qt::PointingHandCursor);
+//    autoHide->setToolTip("auto hide");
 
     search = new QLineEdit(q);
     search->setObjectName("navigationHeader_search");
@@ -48,8 +48,8 @@ void QrNavigationHeaderPrivate::loadUI()
     QHBoxLayout* mainLayout = new QHBoxLayout();
     mainLayout->setContentsMargins(0,0,0,0);
     mainLayout->setSpacing(0);
-    mainLayout->addWidget(search, 0, Qt::AlignLeft);
-    mainLayout->addWidget(autoHide, 0, Qt::AlignRight);
+    mainLayout->addWidget(search);//, 0, Qt::AlignLeft);
+//    mainLayout->addWidget(autoHide, 0, Qt::AlignRight);
     q->setLayout(mainLayout);
 }
 

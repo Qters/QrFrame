@@ -17,9 +17,6 @@
         <file>images/blue/header/setting_hov.png</file>
     </qresource>
     <qresource prefix="/navigation">
-        <file>images/blue/navigation/auto_hide_clk.png</file>
-        <file>images/blue/navigation/auto_hide_def.png</file>
-        <file>images/blue/navigation/auto_hide_hov.png</file>
         <file>images/blue/navigation/splitter_close_clk.png</file>
         <file>images/blue/navigation/splitter_close_def.png</file>
         <file>images/blue/navigation/splitter_close_hov.png</file>
@@ -32,5 +29,15 @@
     </qresource>
     <qresource prefix="/qss">
         <file>qsses/blue.qss</file>
+    </qresource>
+    <qresource prefix="/statusbar">
+        <file>images/blue/status_bar/full_mode.png</file>
+        <file>images/blue/status_bar/normal_def.png</file>
+        <file>images/blue/status_bar/simple_mode.png</file>
+        <file>images/blue/status_bar/normal_hover.png</file>
+    </qresource>
+    <qresource prefix="/workspace">
+        <file>images/blue/workspace/tabclose_clk.png</file>
+        <file>images/blue/workspace/tabclose_def.png</file>
     </qresource>
 </RCC>
