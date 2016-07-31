@@ -9,23 +9,23 @@
 
 NS_CHAOS_BASE_BEGIN
 
-class QrHandleButtonPrivate;
 class QrFrameWindowSplitterPrivate;
 
 class CHAOSBASE_SHAREDEXPORT QrHandleButton : public QPushButton{
-    QR_DECLARE_PRIVATE(QrHandleButton)
+    Q_OBJECT
+    Q_PROPERTY(bool opened READ getOpened WRITE setOpened)
 
 public:
     explicit QrHandleButton(QWidget *parent=0);
 
 public:
-    enum class HandleStatus{
-        Open,
-        Close,
-    };
+    void switchOpenProperty();
 
-public:
-    void updateQss(HandleStatus status);
+    bool getOpened() const;
+    void setOpened(bool value);
+
+private:
+    bool opened;
 };
 
 class CHAOSBASE_SHAREDEXPORT QrFrameWindowSplitter : public QSplitter

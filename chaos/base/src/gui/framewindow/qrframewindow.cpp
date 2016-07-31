@@ -24,6 +24,7 @@ public:
 
 public:
     QrSystemTray *systemTray = nullptr;
+    QrFrameWindowSplitter* splitter = nullptr;
     QrHeader *header = nullptr;
     QrNavigation *navigation = nullptr;
     QrWorkspace *worspace = nullptr;
@@ -44,10 +45,12 @@ void QrFrameWindowPrivate::loadUI()
     Q_Q(QrFrameWindow);
 
     header = new QrHeader(q);
+    header->setObjectName("framewindow_header");
 
     navigation = new QrNavigation(q);
     worspace = new QrWorkspace(q);
-    QrFrameWindowSplitter* splitter = new QrFrameWindowSplitter(q);
+    splitter = new QrFrameWindowSplitter(q);
+    splitter->setObjectName("framewindow_spliter");
     splitter->addWidget(navigation);
     splitter->addWidget(worspace);
     splitter->initHandle(1);
