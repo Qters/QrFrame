@@ -28,7 +28,5 @@ QrNavigationTabView::QrNavigationTabView(QWidget *parent)
     connect(this, &QrNavigationTabView::clicked, [this](const QModelIndex &index){
         this->isExpanded(index)? this->collapse(index) : this->expand(index);
     });
-
-    setObjectName("QrNavigationTabView");
 }
 

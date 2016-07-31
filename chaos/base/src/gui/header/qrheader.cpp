@@ -32,7 +32,6 @@ public:
     QMainWindow* getMainWindow();
     void switchMaxOrNormal(bool fullScrn);
     void connectPressSignal(QAbstractButton *toolButton);
-    void setQssObjectNames();
 
 public:
     bool clickOnButton = false;
@@ -95,22 +94,27 @@ void QrHeaderPrivate::initUI() {
 void QrHeaderPrivate::addTopLayout(QVBoxLayout *mainLayout) {
     Q_Q(QrHeader);
     skinButton = new QToolButton(q);
+    skinButton->setObjectName("header_skinButton");
     skinButton->setToolTip(QObject::tr("skin"));
     skinButton->setToolButtonStyle(Qt::ToolButtonIconOnly);
     skinButton->setPopupMode(QToolButton::InstantPopup);
     loadSkinInfo();
 
     minimumButton = new QToolButton(q);
+    minimumButton->setObjectName("header_minimumButton");
     minimumButton->setToolTip(QObject::tr("minimum"));
 
     maximumnButton = new QToolButton(q);
+    maximumnButton->setObjectName("header_maximumnButton");
     maximumnButton->setToolTip(QObject::tr("maximumn"));
 
     restoreBtn = new QToolButton(q);
+    restoreBtn->setObjectName("header_restoreBtn");
     restoreBtn->setToolTip(QObject::tr("restore"));
     restoreBtn->hide();
 
     closeButton = new QToolButton(q);
+    closeButton->setObjectName("header_closeButton");
     closeButton->setToolTip(QObject::tr("close"));
 
     QHBoxLayout *topLayout = new QHBoxLayout();
@@ -212,17 +216,6 @@ void QrHeaderPrivate::connectPressSignal(QAbstractButton *toolButton)
     });
 }
 
-void QrHeaderPrivate::setQssObjectNames() {
-    Q_Q(QrHeader);
-    q->setObjectName("QrHeader");
-
-    skinButton->setObjectName("QrHeader_skinButton");
-    maximumnButton->setObjectName("QrHeader_maximumnButton");
-    minimumButton->setObjectName("QrHeader_minimumButton");
-    restoreBtn->setObjectName("QrHeader_restoreBtn");
-    closeButton->setObjectName("QrHeader_closeButton");
-}
-
 NS_CHAOS_BASE_END
 
 
@@ -236,7 +229,6 @@ QrHeader::QrHeader(QWidget *parent)
 
     d_ptr->initUI();
     d_ptr->connectSignals();
-    d_ptr->setQssObjectNames();
 }
 
 void QrHeader::mousePressEvent(QMouseEvent *event)

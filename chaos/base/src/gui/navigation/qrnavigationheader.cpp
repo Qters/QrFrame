@@ -17,7 +17,6 @@ public:
 
 public:
     void loadUI();
-    void setQssObjectNames();
 
 public:
     QPushButton* autoHide = nullptr;
@@ -29,10 +28,12 @@ void QrNavigationHeaderPrivate::loadUI()
 {
     Q_Q(QrNavigationHeader);
     autoHide = new QPushButton(q);
+    autoHide->setObjectName("navigationHeader_autohide");
     autoHide->setCursor(Qt::PointingHandCursor);
     autoHide->setToolTip("auto hide");
 
     search = new QLineEdit(q);
+    search->setObjectName("navigationHeader_search");
     search->setPlaceholderText("Search Navigation");
 
     QObject::connect(search, &QLineEdit::textChanged, [this](const QString &value){
@@ -50,12 +51,6 @@ void QrNavigationHeaderPrivate::loadUI()
     mainLayout->addWidget(search, 0, Qt::AlignLeft);
     mainLayout->addWidget(autoHide, 0, Qt::AlignRight);
     q->setLayout(mainLayout);
-}
-
-void QrNavigationHeaderPrivate::setQssObjectNames()
-{
-    autoHide->setObjectName("QrNavigationHeader_autohide");
-    search->setObjectName("QrNavigationHeader_search");
 }
 
 NS_CHAOS_BASE_END
