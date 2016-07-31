@@ -120,13 +120,13 @@ QToolButton#header_closeButton:pressed{
 	Navigation
 ----------------------------------------------------*/
 /**/
-QTabBar::tab#navigation_bar {
+QTabBar#navigation_bar::tab {
 	height:30px;
 	width:79px;
 	border:none;
 }
 
-QTabBar::tab#navigation_bar:selected {
+QTabBar#navigation_bar::tab:selected {
 	background-color:#3E7ABC;
 }
 
