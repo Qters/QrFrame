@@ -1,184 +1,240 @@
-/*	Golbal Begin */
 
-QToolButton{
-	border:none;
-	background-repeat:no-repeat;	
-	background-position: center;
+/*Begin
+----------------------------------------------------
+	Golbal
+----------------------------------------------------*/
+
+QPushButton {	
+	background-repeat : no-repeat ;
+	background-position : center ;
 }
 
-QPushButton{	
-	background-repeat:no-repeat;
-	background-position: center;
+QToolButton {
+	border : none;
+	background-repeat : no-repeat;	
+	background-position : center;
 }
 
-QTabBar::close-button{
-	background-repeat:no-repeat;	
-	background-position: center;
-}
+/*
+----------------------------------------------------
+	Golbal
+----------------------------------------------------End*/
 
-QSplitter::handle:horizontal{
-	width:5px;
-	background-image: url(:/navigation/images/blue/navigation/splitter_def.png);
-}
-QSplitter::handle:hover{
-	background-image: url(:/navigation/images/blue/navigation/splitter_hov.png);
-}
-QSplitter::handle:pressed{
-	background-image: url(:/navigation/images/blue/navigation/splitter_clk.png);
-}
+/*Begin
+----------------------------------------------------
+	Custom  
+----------------------------------------------------*/
 
-/*	Golbal End */
+/*Begin
+----------------------------------------------------
+	Framewindow
+----------------------------------------------------*/
 
-/*----------------------------------------------------*/
-
-/*	Custom Begin */
-
-/*	Header BEGIN */
-
-QFrame#QrHeader {
+/*header*/
+QFrame#framewindow_header {
 	height:30px;
 	background-color: #3E7ABC;
 }
 
-/*	Header-Skin Begin */
-QToolButton#QrHeader_skinButton{
+
+/*spiliter*/
+/*
+QSplitter#framewindow_spliter::handle:horizontal {
+	width:1px;
+	background-image: url(:/navigation/images/blue/navigation/splitter_def.png);
+}
+QSplitter#framewindow_spliter::handle:hover {
+	background-image: url(:/navigation/images/blue/navigation/splitter_hov.png);
+}
+QSplitter#framewindow_spliter::handle:pressed {
+	background-image: url(:/navigation/images/blue/navigation/splitter_clk.png);
+}
+*/
+
+/*spiliter handle button*/
+QPushButton#frameWindowSplitter_handleBtn {
+	border:none;
+	width:5px;
+	height:80px;
+}
+QPushButton#frameWindowSplitter_handleBtn[opened="false"] { 
+	background-image: url(:/navigation/images/blue/navigation/splitter_open_def.png);
+}
+QPushButton#frameWindowSplitter_handleBtn[opened="false"]:hover { 
+	background-image: url(:/navigation/images/blue/navigation/splitter_open_hov.png);
+}
+QPushButton#frameWindowSplitter_handleBtn[opened="false"]:pressed { 
+	background-image: url(:/navigation/images/blue/navigation/splitter_open_clk.png) ;
+}
+QPushButton#frameWindowSplitter_handleBtn[opened="true"] { 
+	background-image: url(:/navigation/images/blue/navigation/splitter_close_def.png);
+}
+QPushButton#frameWindowSplitter_handleBtn[opened="true"]:hover { 
+	background-image: url(:/navigation/images/blue/navigation/splitter_close_hov.png);
+}
+QPushButton#frameWindowSplitter_handleBtn[opened="true"]:pressed { 
+	background-image: url(:/navigation/images/blue/navigation/splitter_close_clk.png) ;
+}
+                      
+
+/*
+----------------------------------------------------
+	Framewindow
+----------------------------------------------------End*/
+
+/*BEGIN
+----------------------------------------------------
+	Header
+----------------------------------------------------*/
+
+/*skin button*/
+QToolButton#header_skinButton{
 	width:30px;
 	height:23px;
 	background-image: url(:/header/images/blue/header/setting_def.png);
 }
-QToolButton#QrHeader_skinButton::menu-indicator { 
+QToolButton#header_skinButton::menu-indicator { 
 	image: none; 
 } 
-QToolButton#QrHeader_skinButton:hover{
+QToolButton#header_skinButton:hover{
 	background-image: url(:/header/images/blue/header/setting_hov.png);
 }
-QToolButton#QrHeader_skinButton:pressed{
+QToolButton#header_skinButton:pressed{
 	background-image: url(:/header/images/blue/header/setting_clk.png);
 }
-/*	Header-Skin End */
 
-/*	Header-Maximum Begin */
-QToolButton#QrHeader_maximumnButton{
+
+/*maximum button*/
+QToolButton#header_maximumnButton{
 	width:30px;
 	height:23px;
 	background-image: url(:/header/images/blue/header/max_def.png);
 }
-QToolButton#QrHeader_maximumnButton:hover{
+QToolButton#header_maximumnButton:hover{
 	background-image: url(:/header/images/blue/header/max_hov.png);
 }
-QToolButton#QrHeader_maximumnButton:pressed{
+QToolButton#header_maximumnButton:pressed{
 	background-image: url(:/header/images/blue/header/max_clk.png);
 }
-/*	Header-Maximum End */
 
-/*	Header-Restore-Normal-Size Begin */
-QToolButton#QrHeader_restoreBtn{
+
+/*restore button*/
+QToolButton#header_restoreBtn{
 	width:30px;
 	height:23px;
 	background-image: url(:/header/images/blue/header/restore_size_def.png);
 }
-QToolButton#QrHeader_restoreBtn:hover{
+QToolButton#header_restoreBtn:hover{
 	background-image: url(:/header/images/blue/header/restore_size_hov.png);
 }
-QToolButton#QrHeader_restoreBtn:pressed{
+QToolButton#header_restoreBtn:pressed{
 	background-image: url(:/header/images/blue/header/restore_size_clk.png);
 }
-/*	Header-Restore-Normal-Size Begin */
 
-/*	Header-Minimum Begin */
-QToolButton#QrHeader_minimumButton{
+
+/*minimum button*/
+QToolButton#header_minimumButton{
 	width:30px;
 	height:23px;
 	background-image: url(:/header/images/blue/header/min_def.png);
 }
-QToolButton#QrHeader_minimumButton:hover{
+QToolButton#header_minimumButton:hover{
 	background-image: url(:/header/images/blue/header/min_hov.png);
 }
-QToolButton#QrHeader_minimumButton:pressed{
+QToolButton#header_minimumButton:pressed{
 	background-image: url(:/header/images/blue/header/min_clk.png);
 }
-/*	Header-Minimum End */
 
-/*	Header-Close Begin */
-QToolButton#QrHeader_closeButton{
+
+/*close button*/
+QToolButton#header_closeButton{
 	width:30px;
 	height:23px;
 	background-image: url(:/header/images/blue/header/close_def.png);
 }
-QToolButton#QrHeader_closeButton:hover{
+QToolButton#header_closeButton:hover{
 	background-image: url(:/header/images/blue/header/close_hov.png);
 }
-QToolButton#QrHeader_closeButton:pressed{
+QToolButton#header_closeButton:pressed{
 	background-image: url(:/header/images/blue/header/close_clk.png);
 }
-/*	Header-Close End */
 
-/*	Header End */
-
-/*	Framewindow Begin */
-
-QPushButton#QrFrameWindowSplitter_handleBtn
-{
-	border:none;
-	width:5px;
-	height:64px;
-}		
-
-/*	Framewindow End */
+----------------------------------------------------
+	Header
+----------------------------------------------------End*/
 
 
-/*	Navigation Begin */
-
-QLineEdit#QrNavigationHeader_search{
+/*Begin
+----------------------------------------------------
+	Navigation
+----------------------------------------------------*/
+/**/
+QLineEdit#navigationHeader_search{
 	height:27px;
 	background-repeat:no-repeat;
 	background-color:#98BADD;
 }
 
-QTreeView#QrNavigationTabView{
+/*tab*/
+QTreeView#navigationTabPage_view{
 	background-color:#DFE8F1;
     border:none;
 	/*show-decoration-selected:1;*/
 }
 
-QTreeView::branch{
+QTreeView#navigationTabPage_view::branch{
 	image:none;
 }
 
-QTreeView::item{
+QTreeView#navigationTabPage_view::item{
 	height:28px;
 }
 
-QTreeView::item:hover{
+QTreeView#navigationTabPage_view::item:hover{
 	background-color:#9AC7F6;
 }
 
-QTreeView::item:selected{
+QTreeView#navigationTabPage_view::item:selected{
 	background-color:#3E7ABC;
 }
 
-QTreeView::branch:has-children:!has-siblings:closed,
-QTreeView::branch:closed:has-children:has-siblings {
+QTreeView#navigationTabPage_view::branch:has-children:!has-siblings:closed,
+QTreeView#navigationTabPage_view::branch:closed:has-children:has-siblings {
     border-image: none;
     image: url(:/navigation/images/blue/navigation/arrow_close.png);
 }
 
-QTreeView::branch:open:has-children:!has-siblings,
-QTreeView::branch:open:has-children:has-siblings {
+QTreeView#navigationTabPage_view::branch:open:has-children:!has-siblings,
+QTreeView#navigationTabPage_view::branch:open:has-children:has-siblings {
     border-image: none;
     image: url(:/navigation/images/blue/navigation/arrow_open.png);
 }
 
-/*	Navigation End */
+/*
+----------------------------------------------------
+Navigation
+----------------------------------------------------End*/
 
 
-/*	Workspace Begin */
+/*Begin
+----------------------------------------------------
+	Workspace
+----------------------------------------------------*/
 
 
-/*	Workspace End */
+/*
+----------------------------------------------------
+	Workspace
+----------------------------------------------------End*/
 
 
-/*	Statusbar Begin */
+/*Begin
+----------------------------------------------------
+	Statusbar
+----------------------------------------------------*/
 
 
-/*	Statusbar End */
+/*
+----------------------------------------------------
+	Statusbar
+----------------------------------------------------End*/
