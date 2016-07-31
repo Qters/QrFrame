@@ -20,14 +20,27 @@ id	|	parentid	|	key			  |	display		  |	icon	|	tag
 
 ![navigation ui](http://img.hoop8.com/1607C/RNe485GN.png)
 
-`
-sdfsdf
-sdfsdf
-sdfsdf
+```cpp
+...
+class QrNavigation {
+...
+static bool qrconnect(const QString& path,
+                          const QObject *receiver,
+                          const char *member);
+...
+};
 
-
-sdfsdf
-`
+//  connect signal and slot by navigaiton path(like java package path)
+class SomeService{
+public:
+  void init() {
+    QrNavigation::qrconnect("home.product.qrframe", this, SLOT(onQrFrame()));
+  }
+private slots:
+    void onQrFrame() {}
+}
+```
+[demo : connect signal and slot of navigaiton](https://github.com/Qters/QrFrame/blob/master/chaos/services/product/qrproductservice.cpp#L38)
 
 ## system tray
 
@@ -40,3 +53,38 @@ id	| separator	| isvisible	| text	      | icon	| sort	| key
 5	  | False	    | True	    | exit		    |       | 5	    | exit
 
 ![sytem tray ui](http://img.hoop8.com/1607C/VpMbSv7G.png)
+```cpp
+...
+class QrSystemTray {
+...
+static bool qrconnect(const QString& path,
+                          const QObject *receiver,
+                          const char *member);
+...
+};
+
+//  connect signal and slot by system tray path(like java package path)
+class SomeService{
+public:
+  void init() {
+    QrSystemTray::qrconnect("exit", qApp, SLOT(quit()));
+  }
+}
+```
+[demo : connect signal and slot of system tray](https://github.com/Qters/QrFrame/blob/master/chaos/services/main/qrmainservice.cpp#L53)
+
+# workspace 
+
+```cpp
+...
+class QrWorkspace {
+...
+static int appendTab(QWidget *widget, QString label);
+...
+};
+
+
+QrWorkspace::appendTab(new QPushButton(), "Tab Title");
+
+```
+[demo : append tab page to workspace](https://github.com/Qters/QrFrame/blob/master/chaos/services/product/qrproductservice.cpp#L57)
