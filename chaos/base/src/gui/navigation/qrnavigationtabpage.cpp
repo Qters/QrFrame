@@ -79,6 +79,7 @@ void QrNavigationTabPagePrivate::initModel(QString parentKey,
     Q_Q(QrNavigationTabPage);
     Q_FOREACH(QrNavigationDbData* data, dbData->children) {
         QStandardItem *item = new QStandardItem(data->display);
+        item->setIcon(QIcon(data->icon));
         if (! data->children.empty()) {
             initModel(parentKey.isEmpty() ? data->key
                         : parentKey+"."+data->key,
