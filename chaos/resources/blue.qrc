@@ -40,4 +40,28 @@
         <file>images/blue/workspace/tabclose_clk.png</file>
         <file>images/blue/workspace/tabclose_def.png</file>
     </qresource>
+    <qresource prefix="/system_tray">
+        <file>images/blue/system_tray/about.png</file>
+        <file>images/blue/system_tray/check_update.png</file>
+        <file>images/blue/system_tray/help.png</file>
+        <file>images/blue/system_tray/setting.png</file>
+        <file>images/blue/system_tray/exit.png</file>
+        <file>images/blue/system_tray/systemtray.png</file>
+    </qresource>
+    <qresource prefix="/main_service">
+        <file>images/blue/main_service/main1.png</file>
+        <file>images/blue/main_service/main2.png</file>
+        <file>images/blue/main_service/main3.png</file>
+        <file>images/blue/main_service/main0.png</file>
+    </qresource>
+    <qresource prefix="/product_service">
+        <file>images/blue/product_service/product1.png</file>
+        <file>images/blue/product_service/product2.png</file>
+        <file>images/blue/product_service/product3.png</file>
+        <file>images/blue/product_service/product4.png</file>
+        <file>images/blue/product_service/product5.png</file>
+        <file>images/blue/product_service/product6.png</file>
+        <file>images/blue/product_service/product7.png</file>
+        <file>images/blue/product_service/product0.png</file>
+    </qresource>
 </RCC>
