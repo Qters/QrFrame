@@ -20,7 +20,7 @@ id	|	parentid	|	key			  |	display		  |	icon	|	tag
 15	|	9			    |	qrupdate	|	qrupdate	  |			  |	first
 17	|	9			    |	qrcache		|	qrcache		  |			  |	first
 
-![navigation ui](http://img.hoop8.com/1607C/RNe485GN.png)
+![navigation ui](http://img.hoop8.com/1608A/TiBC4cSe.png)
 
 ```cpp
 ...
@@ -54,7 +54,7 @@ id	| separator	| isvisible	| text	      | icon	| sort	| key
 4	  | True	    | True	    | check update|		    | 4	    | check.update
 5	  | False	    | True	    | exit		    |       | 5	    | exit
 
-![sytem tray ui](http://img.hoop8.com/1607C/VpMbSv7G.png)
+![sytem tray ui](http://img.hoop8.com/1608A/cuVXeOH2.png)
 ```cpp
 ...
 class QrSystemTray {
