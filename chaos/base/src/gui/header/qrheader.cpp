@@ -156,7 +156,6 @@ bool QrHeaderPrivate::loadSkinInfo() {
     const int curSkinIndex = static_cast<int>(QrStyle::curSkinIndex());
     QVector<QrQssData> skinDatas = QrStyle::getSkinDataInDB();
 
-    Q_Q(QrHeader);
     QMenu *skinMenu = new QMenu();
     QActionGroup *skinActions = new QActionGroup(skinMenu);
     Q_FOREACH(QrQssData skinData, skinDatas) {
