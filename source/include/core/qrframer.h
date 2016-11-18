@@ -14,7 +14,7 @@ class QrMainWindow;
 /*!
  * \brief framer configuration
  */
-class QrFramerConfig{
+class QRFRAMESHARED_EXPORT QrFramerConfig{
 public:
     QrFramerConfig()
         : installLog(true)
