@@ -10,6 +10,7 @@ class QrSplashScreenPrivate {
     QR_DECLARE_PUBLIC(QrSplashScreen)
 
 public:
+    QColor messageColor = Qt::white;
     QProgressBar *progressBar = nullptr;
     QVector<QrSplashStep> functions;
 
@@ -74,7 +75,7 @@ bool QrSplashScreen::start(bool isShow)
     auto functionCount = d->functions.count();
     auto functionProgressValue = 100/functionCount;
     Q_FOREACH(QrSplashStep function, d->functions) {
-        showMessage(function.message, Qt::AlignLeft | Qt::AlignBottom);
+        showMessage(function.message, Qt::AlignLeft | Qt::AlignBottom, d->messageColor);
         bool functionSuccess = function.function();
         if(! functionSuccess) {
             qInfo() << function.failMsg;
@@ -85,5 +86,11 @@ bool QrSplashScreen::start(bool isShow)
     d->progressBar->setValue(100);
 
     return success;
+}
+
+void QrSplashScreen::setMessageColor(const QColor &color)
+{
+    Q_D(QrSplashScreen);
+    d->messageColor = color;
 }
 

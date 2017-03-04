@@ -34,8 +34,9 @@ public:
     virtual ~QrSplashScreen();
 
 public:
-    void addStepFunction(QrSplashStep function);
     bool start(bool isShow);
+    void setMessageColor(const QColor& color);
+    void addStepFunction(QrSplashStep function);
 };
 
 #endif // QRSPLASHSCREEN_H

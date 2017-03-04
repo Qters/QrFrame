@@ -1,6 +1,8 @@
 ﻿#ifndef QRFRAME_H
 #define QRFRAME_H
 
+#include <QtGui/qcolor.h>
+
 #include "qrglobal.h"
 #include "qrframe_global.h"
 #include "entity/qrsqldatabase.h"
@@ -23,6 +25,7 @@ public:
 
     bool splashscreen = false;
     QString splashscreenBgQrcPath;
+    QColor splashColor = Qt::white;
 
     Qters::QrOrm::QrSqlDatabaseParams dbParams;
 };

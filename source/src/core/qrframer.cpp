@@ -15,6 +15,7 @@
 #include "Logger.h"
 #include "FileAppender.h"
 
+#include "qrutf8.h"
 #include "qrsqlhelper.h"
 #include "qrsplashscreen.h"
 
@@ -64,6 +65,7 @@ bool QrFramer::start()
 {
     Q_D(QrFramer);
     d->splashScreen = new QrSplashScreen(d->frameConfig.splashscreenBgQrcPath);
+    d->splashScreen->setMessageColor(d->frameConfig.splashColor);
 
     d->initByConfig();
 
