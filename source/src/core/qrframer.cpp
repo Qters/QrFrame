@@ -33,6 +33,7 @@ public:
     bool getServices(QVector<QString> &serviceNames);
     bool loadServices();
     bool initServices();
+    void makesureSplashExist();
 
 public:
     QrMainWindow *mainwindow;
@@ -52,9 +53,6 @@ USING_NS_QRORM;
 
 QrFramer::QrFramer() : d_ptr(new QrFramerPrivate)
 {
-    Q_D(QrFramer);
-    d->splashScreen = new QrSplashScreen(d->frameConfig.splashscreenBgQrcPath);
-    d->splashScreen->setMessageColor(d->frameConfig.splashColor);
 }
 
 QrFramer::~QrFramer()
@@ -75,12 +73,15 @@ void QrFramer::setMainWindow(QrMainWindow *mainwindow)
 void QrFramer::addSplashStep(const QrSplashStep &splashStep)
 {
     Q_D(QrFramer);
+    d->makesureSplashExist();
     d->splashScreen->addStepFunction(splashStep);
 }
 
 bool QrFramer::start()
 {
     Q_D(QrFramer);
+
+    d->makesureSplashExist();
 
     d->initByConfig();
 
@@ -240,6 +241,14 @@ bool QrFramerPrivate::initServices() {
     splashScreen->addStepFunction(splashStep);
 
     return true;
+}
+
+void QrFramerPrivate::makesureSplashExist()
+{
+    if( nullptr == splashScreen) {
+        splashScreen = new QrSplashScreen(frameConfig.splashscreenBgQrcPath);
+        splashScreen->setMessageColor(frameConfig.splashColor);
+    }
 }
 
 bool QrFramerPrivate::initByConfig()

@@ -36,7 +36,6 @@ void QrSplashScreenPrivate::init()
 {
     Q_Q(QrSplashScreen);
     progressBar = new QProgressBar(q);
-    progressBar->setObjectName("splashscreen_progressbar");
     progressBar->setGeometry(0, q->pixmap().height()-50, q->pixmap().width(), 30);
     progressBar->setRange(0, 100);
     progressBar->setValue(0);
