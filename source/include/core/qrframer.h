@@ -17,10 +17,13 @@ class QrMainWindow;
 class QRFRAMESHARED_EXPORT QrFramerConfig{
 public:
     QrFramerConfig()
-        : installLog(true)
     {}
 
-    bool installLog;
+    bool installLog = true;
+
+    bool splashscreen = false;
+    QString splashscreenBgQrcPath;
+
     Qters::QrOrm::QrSqlDatabaseParams dbParams;
 };
 

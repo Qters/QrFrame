@@ -16,6 +16,7 @@
 #include "FileAppender.h"
 
 #include "qrsqlhelper.h"
+#include "qrsplashscreen.h"
 
 NS_QRFRAME_BEGIN
 
@@ -34,6 +35,7 @@ public:
 
 public:
     QrMainWindow *mainwindow;
+    QrSplashScreen *splashScreen = nullptr;
     QrFramerConfig frameConfig;
     QVector<QString> serviceNames;
     QVector<QPair<QString, QObject *> > loadedServices;
@@ -61,26 +63,25 @@ void QrFramer::setMainWindow(QrMainWindow *mainwindow)
 bool QrFramer::start()
 {
     Q_D(QrFramer);
-    if (! d->initByConfig()) {
-        qWarning() << "framer initialize fail by config";
-    }
+    d->splashScreen = new QrSplashScreen(d->frameConfig.splashscreenBgQrcPath);
 
-    if (! loadFramework() ) {
-        qWarning() << "framework loaded fail";
-        return false;
-    }
+    d->initByConfig();
 
-    if (! d->mainwindow->init()) {
-        qWarning() << "mainwindow init fail";
-        return false;
-    }
+    loadFramework();
 
-    if (! initFramework() ) {
-        qWarning() << "framework init fail";
+    d->mainwindow->init();
+
+    initFramework();
+
+    if(! d->splashScreen->start(d->frameConfig.splashscreen)) {
+        qWarning() << "frame init fail";
         return false;
     }
 
     d->mainwindow->show();
+
+    d->splashScreen->finish(d->mainwindow);
+
     return true;
 }
 
@@ -93,25 +94,34 @@ void QrFramer::setConfig(const QrFramerConfig &config)
 bool QrFramer::loadFramework()
 {
     Q_D(QrFramer);
-    qDebug() << "begin load framework";
 
-    bool suc = QrSqlHelper::makesureDbExist(QrFrameDb::getInstance())
-            && d->getServices(d->serviceNames)
-            && d->loadServices();
+    QrSplashStep initDbStep;
+    initDbStep.message = QObject::tr("初始化数据库");
+    initDbStep.failMsg = "fail to init database";
+    initDbStep.function = [](){
+        qDebug() << "begin load database";
+        auto success = QrSqlHelper::makesureDbExist(QrFrameDb::getInstance());
+        qDebug() << "end load database";
+        return success;
+    };
+    d->splashScreen->addStepFunction(initDbStep);
 
-    qDebug() << "end load framework";
-    return suc;
+    QrSplashStep getServicesStep;
+    getServicesStep.message = QObject::tr("获取服务模块");
+    getServicesStep.failMsg = "fail to get services";
+    getServicesStep.function = [this](){
+        Q_D(QrFramer);
+        return d->getServices(d->serviceNames);
+    };
+    d->splashScreen->addStepFunction(getServicesStep);
+
+    return d->loadServices();
 }
 
 bool QrFramer::initFramework()
 {
     Q_D(QrFramer);
-    qDebug() << "begin initialize framework";
-
-    bool suc = d->initServices();
-
-    qDebug() << "end initialize framework";
-    return suc;
+    return d->initServices();
 }
 
 //////////////////////////////////////////////////
@@ -156,22 +166,31 @@ bool QrFramerPrivate::loadServices() {
     }
 
     this->loadedServices.clear();
-    QPluginLoader serviceLoader;
     const QString absPathOfServicePlugin = QApplication::applicationDirPath() + "/" + pluginFolder + "/";
     Q_FOREACH(auto serviceName, this->serviceNames) {
-        QString absFileNameOfServicePlugin = absPathOfServicePlugin + serviceName;
+        QrSplashStep serviceStep;
+        serviceStep.message = QObject::tr("加载%1").arg(serviceName);
+        serviceStep.failMsg = QString("fail to init %1").arg(serviceName);
+        serviceStep.function = [this, absPathOfServicePlugin, serviceName](){
+            QPluginLoader serviceLoader;
+            QString absFileNameOfServicePlugin = absPathOfServicePlugin + serviceName;
 #ifdef QT_DEBUG
-        absFileNameOfServicePlugin += "d";
+            absFileNameOfServicePlugin += "d";
 #endif
-        absFileNameOfServicePlugin += ".dll";
-        serviceLoader.setFileName(absFileNameOfServicePlugin);
-        QObject *servicePllugin = serviceLoader.instance();
-        if(nullptr == servicePllugin){
-            qWarning() << absFileNameOfServicePlugin << " is not a service plugin object.";
-            continue;
-        }
-        qInfo() << serviceName << " loaded success.";
-        this->loadedServices.append(qMakePair<QString, QObject*>(absFileNameOfServicePlugin, servicePllugin));
+            absFileNameOfServicePlugin += ".dll";
+            serviceLoader.setFileName(absFileNameOfServicePlugin);
+            QObject *servicePllugin = serviceLoader.instance();
+            if(nullptr == servicePllugin){
+                qWarning() << absFileNameOfServicePlugin << " is not a service plugin object.";
+                return false;
+            }
+
+            qInfo() << serviceName << " loaded success.";
+            loadedServices.append(qMakePair<QString, QObject*>(absFileNameOfServicePlugin, servicePllugin));
+
+            return true;
+        };
+        splashScreen->addStepFunction(serviceStep);
     }
 
     return true;
@@ -179,15 +198,26 @@ bool QrFramerPrivate::loadServices() {
 
 bool QrFramerPrivate::initServices() {
     Q_FOREACH(auto service, this->loadedServices) {
-        auto *serviceIf = qobject_cast<QrIfService*>(service.second);
-        if (nullptr == serviceIf) {
-            qWarning() << service.first << " is not a service";
-            continue;
-        }
-        if (! serviceIf->init()) {
-            qWarning() << service.first << " init fail";
-        }
-        qInfo() << "service " << service.first << " init success.";
+        auto serviceName = service.first;
+        auto serviceObject = service.second;
+
+        QrSplashStep splashStep;
+        splashStep.message = QObject::tr("初始化%1").arg(serviceName);
+        splashStep.failMsg = QString("fail to init %1").arg(serviceName);
+        splashStep.function = [this, serviceName, serviceObject](){
+            auto *serviceIf = qobject_cast<QrIfService*>(serviceObject);
+            if (nullptr == serviceIf) {
+                qWarning() << serviceName << " is not a service";
+                return false;
+            }
+            if (! serviceIf->init()) {
+                return false;
+            }
+            qInfo() << "service " << serviceName << " init success.";
+
+            return true;
+        };
+        splashScreen->addStepFunction(splashStep);
     }
 
     return true;
@@ -197,16 +227,25 @@ bool QrFramerPrivate::initByConfig()
 {
     QrFrameDb::getInstance()->setParams(frameConfig.dbParams);
 
-    bool initSuc = true;
-    if (frameConfig.installLog) {   //  should do it first after init database params
-        initSuc = QrFramerPrivate::installLog();
-    }
+    QrSplashStep splashStep;
+    splashStep.message = QObject::tr("初始化日志服务");
+    splashStep.failMsg = "framer initialize fail by config";
+    splashStep.function = [this](){
+        bool initSuc = true;
+        if (frameConfig.installLog) {   //  should do it first after init database params
+            initSuc = QrFramerPrivate::installLog();
+        }
 
-    qInfo() << "frame database's is "
-            << frameConfig.dbParams.folder
-            << "/" << frameConfig.dbParams.databaseName;
+        qInfo() << "frame database's is "
+                << frameConfig.dbParams.folder
+                << "/" << frameConfig.dbParams.databaseName;
 
-    return initSuc;
+        return initSuc;
+    };
+
+    splashScreen->addStepFunction(splashStep);
+
+    return true;
 }
 
 bool QrFramerPrivate::installLog()
