@@ -9,6 +9,8 @@
 
 #include "qrframe_global.h"
 
+NS_QRFRAME_BEGIN
+
 class QRFRAMESHARED_EXPORT QrSplashStep {
 public:
     typedef std::function<bool()> StepFunction;
@@ -38,5 +40,7 @@ public:
     void setMessageColor(const QColor& color);
     void addStepFunction(QrSplashStep function);
 };
+
+NS_QRFRAME_END
 
 #endif // QRSPLASHSCREEN_H

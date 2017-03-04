@@ -6,6 +6,8 @@
 
 #include <QtGui/qpixmap.h>
 
+NS_QRFRAME_BEGIN
+
 class QrSplashScreenPrivate {
     QR_DECLARE_PUBLIC(QrSplashScreen)
 
@@ -20,6 +22,11 @@ public:
 public:
     void init();
 };
+
+NS_QRFRAME_END
+
+
+USING_NS_QRFRAME;
 
 QrSplashScreenPrivate::QrSplashScreenPrivate(QrSplashScreen *q)
     : q_ptr(q)

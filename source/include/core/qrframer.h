@@ -11,7 +11,7 @@ NS_QRFRAME_BEGIN
 
 class QrFramerPrivate;
 class QrMainWindow;
-
+class QrSplashStep;
 
 /*!
  * \brief framer configuration
@@ -39,10 +39,14 @@ class QRFRAMESHARED_EXPORT QrFramer
 
 public:
     QrFramer();
+    virtual ~QrFramer();
 
 public:
     void setConfig(const QrFramerConfig& config);
     void setMainWindow(QrMainWindow *mainwindow);
+
+    //  should be add before call start()
+    void addSplashStep(const QrSplashStep& splashStep);
 
 public:
     virtual bool start();

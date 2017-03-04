@@ -52,7 +52,18 @@ USING_NS_QRORM;
 
 QrFramer::QrFramer() : d_ptr(new QrFramerPrivate)
 {
+    Q_D(QrFramer);
+    d->splashScreen = new QrSplashScreen(d->frameConfig.splashscreenBgQrcPath);
+    d->splashScreen->setMessageColor(d->frameConfig.splashColor);
+}
 
+QrFramer::~QrFramer()
+{
+    Q_D(QrFramer);
+    if(nullptr != d->splashScreen) {
+        delete d->splashScreen;
+        d->splashScreen = nullptr;
+    }
 }
 
 void QrFramer::setMainWindow(QrMainWindow *mainwindow)
@@ -61,11 +72,15 @@ void QrFramer::setMainWindow(QrMainWindow *mainwindow)
     d->mainwindow = mainwindow;
 }
 
+void QrFramer::addSplashStep(const QrSplashStep &splashStep)
+{
+    Q_D(QrFramer);
+    d->splashScreen->addStepFunction(splashStep);
+}
+
 bool QrFramer::start()
 {
     Q_D(QrFramer);
-    d->splashScreen = new QrSplashScreen(d->frameConfig.splashscreenBgQrcPath);
-    d->splashScreen->setMessageColor(d->frameConfig.splashColor);
 
     d->initByConfig();
 
