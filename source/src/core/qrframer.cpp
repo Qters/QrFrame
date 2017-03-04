@@ -149,11 +149,6 @@ bool QrFramerPrivate::loadServices() {
     static const QString dbKey = "folder";
     static const QString defaultFolder = "services";
 
-    if (this->serviceNames.isEmpty()) {
-        qInfo() << "services is empty";
-        return true;
-    }
-
     QString pluginFolder;
     QMap<QString, QString> serviceValues;
     if ( QrTblFrameConfigHelper::getKeyValuesByType(dbServiceType, &serviceValues)) {
@@ -165,13 +160,19 @@ bool QrFramerPrivate::loadServices() {
         }
     }
 
-    this->loadedServices.clear();
     const QString absPathOfServicePlugin = QApplication::applicationDirPath() + "/" + pluginFolder + "/";
-    Q_FOREACH(auto serviceName, this->serviceNames) {
-        QrSplashStep serviceStep;
-        serviceStep.message = QObject::tr("加载%1").arg(serviceName);
-        serviceStep.failMsg = QString("fail to init %1").arg(serviceName);
-        serviceStep.function = [this, absPathOfServicePlugin, serviceName](){
+
+    QrSplashStep serviceStep;
+    serviceStep.message = QObject::tr("加载服务");
+    serviceStep.failMsg = QString("fail to load services");
+    serviceStep.function = [this, absPathOfServicePlugin](){
+        if (serviceNames.isEmpty()) {
+            qInfo() << "services is empty";
+            return true;
+        }
+
+        loadedServices.clear();
+        Q_FOREACH(auto serviceName, serviceNames) {
             QPluginLoader serviceLoader;
             QString absFileNameOfServicePlugin = absPathOfServicePlugin + serviceName;
 #ifdef QT_DEBUG
@@ -182,43 +183,44 @@ bool QrFramerPrivate::loadServices() {
             QObject *servicePllugin = serviceLoader.instance();
             if(nullptr == servicePllugin){
                 qWarning() << absFileNameOfServicePlugin << " is not a service plugin object.";
-                return false;
+                continue;
             }
 
             qInfo() << serviceName << " loaded success.";
             loadedServices.append(qMakePair<QString, QObject*>(absFileNameOfServicePlugin, servicePllugin));
-
-            return true;
         };
-        splashScreen->addStepFunction(serviceStep);
-    }
+
+        return true;
+    };
+    splashScreen->addStepFunction(serviceStep);
 
     return true;
 }
 
 bool QrFramerPrivate::initServices() {
-    Q_FOREACH(auto service, this->loadedServices) {
-        auto serviceName = service.first;
-        auto serviceObject = service.second;
+    QrSplashStep splashStep;
+    splashStep.message = QObject::tr("初始化服务");
+    splashStep.failMsg = QString("fail to init services");
+    splashStep.function = [this](){
+        Q_FOREACH(auto service, loadedServices) {
+            auto serviceName = service.first;
+            auto serviceObject = service.second;
 
-        QrSplashStep splashStep;
-        splashStep.message = QObject::tr("初始化%1").arg(serviceName);
-        splashStep.failMsg = QString("fail to init %1").arg(serviceName);
-        splashStep.function = [this, serviceName, serviceObject](){
             auto *serviceIf = qobject_cast<QrIfService*>(serviceObject);
             if (nullptr == serviceIf) {
                 qWarning() << serviceName << " is not a service";
-                return false;
+                continue;
             }
             if (! serviceIf->init()) {
-                return false;
+                qWarning() << "fail to init " << serviceName << " service.";
+                continue;
             }
             qInfo() << "service " << serviceName << " init success.";
+        }
 
-            return true;
-        };
-        splashScreen->addStepFunction(splashStep);
-    }
+        return true;
+    };
+    splashScreen->addStepFunction(splashStep);
 
     return true;
 }
