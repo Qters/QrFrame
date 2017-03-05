@@ -1,4 +1,4 @@
-#ifndef QRSPLASHSCREEN_H
+﻿#ifndef QRSPLASHSCREEN_H
 #define QRSPLASHSCREEN_H
 
 #include <functional>
@@ -39,6 +39,7 @@ public:
     bool start(bool isShow);
     void setMessageColor(const QColor& color);
     void addStepFunction(QrSplashStep function);
+    void showMessageEx(const QString &message);
 };
 
 NS_QRFRAME_END

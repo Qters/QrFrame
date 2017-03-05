@@ -1,4 +1,4 @@
-#include "qrsplashscreen.h"
+﻿#include "qrsplashscreen.h"
 
 #include <QtCore/qdebug.h>
 
@@ -36,7 +36,7 @@ void QrSplashScreenPrivate::init()
 {
     Q_Q(QrSplashScreen);
     progressBar = new QProgressBar(q);
-    progressBar->setGeometry(0, q->pixmap().height()-50, q->pixmap().width(), 30);
+    progressBar->setGeometry(0, q->pixmap().height()-50, q->pixmap().width(), 15);
     progressBar->setRange(0, 100);
     progressBar->setValue(0);
 }
@@ -70,6 +70,12 @@ void QrSplashScreen::addStepFunction(QrSplashStep function)
     d->functions.push_back(function);
 }
 
+void QrSplashScreen::showMessageEx(const QString &message)
+{
+    Q_D(QrSplashScreen);
+    showMessage(message, Qt::AlignLeft | Qt::AlignBottom, d->messageColor);
+}
+
 bool QrSplashScreen::start(bool isShow)
 {
     if(isShow) {
@@ -81,7 +87,7 @@ bool QrSplashScreen::start(bool isShow)
     auto functionCount = d->functions.count();
     auto functionProgressValue = 100/functionCount;
     Q_FOREACH(QrSplashStep function, d->functions) {
-        showMessage(function.message, Qt::AlignLeft | Qt::AlignBottom, d->messageColor);
+        showMessageEx(function.message);
         bool functionSuccess = function.function();
         if(! functionSuccess) {
             qInfo() << function.failMsg;

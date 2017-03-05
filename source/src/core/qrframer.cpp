@@ -197,6 +197,7 @@ bool QrFramerPrivate::loadServices() {
             absFileNameOfServicePlugin += "d";
 #endif
             absFileNameOfServicePlugin += ".dll";
+            splashScreen->showMessageEx(QObject::tr("加载%1").arg(absFileNameOfServicePlugin));
             serviceLoader.setFileName(absFileNameOfServicePlugin);
             QObject *servicePllugin = serviceLoader.instance();
             if(nullptr == servicePllugin){
@@ -224,6 +225,7 @@ bool QrFramerPrivate::initServices() {
             auto serviceName = service.first;
             auto serviceObject = service.second;
 
+            splashScreen->showMessageEx(QObject::tr("初始化%1").arg(serviceName));
             auto *serviceIf = qobject_cast<QrIfService*>(serviceObject);
             if (nullptr == serviceIf) {
                 qWarning() << serviceName << " is not a service";
