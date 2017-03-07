@@ -29,13 +29,15 @@ public:
                                       Logger::LogLevel *defaultLevel);
 
 public:
-    bool initByConfig();
     bool getServices(QVector<QString> &serviceNames);
     bool loadServices();
     bool initServices();
     void makesureSplashExist();
+    bool initLogger();
+    bool initDatabase();
 
 public:
+    bool isInit = false;
     QrMainWindow *mainwindow;
     QrSplashScreen *splashScreen = nullptr;
     QrFramerConfig frameConfig;
@@ -77,13 +79,32 @@ void QrFramer::addSplashStep(const QrSplashStep &splashStep)
     d->splashScreen->addStepFunction(splashStep);
 }
 
+bool QrFramer::init()
+{
+    Q_D(QrFramer);
+    QrFrameDb::getInstance()->setParams(d->frameConfig.dbParams);
+
+    if(! d->initLogger()) {
+        qInfo() << "fail to init logger";
+    }
+    if(! d->initDatabase()) {
+        qWarning() << "fail to init database";
+        return false;
+    }
+
+    d->isInit = true;
+    return true;
+}
+
 bool QrFramer::start()
 {
     Q_D(QrFramer);
+    if(! d->isInit) {
+        qWarning() << "framer is not init.";
+        return false;
+    }
 
     d->makesureSplashExist();
-
-    d->initByConfig();
 
     loadFramework();
 
@@ -112,17 +133,6 @@ void QrFramer::setConfig(const QrFramerConfig &config)
 bool QrFramer::loadFramework()
 {
     Q_D(QrFramer);
-
-    QrSplashStep initDbStep;
-    initDbStep.message = QObject::tr("初始化数据库");
-    initDbStep.failMsg = "fail to init database";
-    initDbStep.function = [](){
-        qDebug() << "begin load database";
-        auto success = QrSqlHelper::makesureDbExist(QrFrameDb::getInstance());
-        qDebug() << "end load database";
-        return success;
-    };
-    d->splashScreen->addStepFunction(initDbStep);
 
     QrSplashStep getServicesStep;
     getServicesStep.message = QObject::tr("获取服务模块");
@@ -253,29 +263,34 @@ void QrFramerPrivate::makesureSplashExist()
     }
 }
 
-bool QrFramerPrivate::initByConfig()
+bool QrFramerPrivate::initLogger()
 {
-    QrFrameDb::getInstance()->setParams(frameConfig.dbParams);
+    qDebug() << "初始化日志服务";
 
-    QrSplashStep splashStep;
-    splashStep.message = QObject::tr("初始化日志服务");
-    splashStep.failMsg = "framer initialize fail by config";
-    splashStep.function = [this](){
-        bool initSuc = true;
-        if (frameConfig.installLog) {   //  should do it first after init database params
-            initSuc = QrFramerPrivate::installLog();
-        }
+    bool initSuc = true;
+    if (frameConfig.installLog) {   //  should do it first after init database params
+        initSuc = QrFramerPrivate::installLog();
+    }
 
-        qInfo() << "frame database's is "
-                << frameConfig.dbParams.folder
-                << "/" << frameConfig.dbParams.databaseName;
+    qInfo() << "frame database's is "
+            << frameConfig.dbParams.folder
+            << "/" << frameConfig.dbParams.databaseName;
 
-        return initSuc;
-    };
+    return initSuc;
+}
 
-    splashScreen->addStepFunction(splashStep);
+bool QrFramerPrivate::initDatabase()
+{
+    qDebug() << "初始化数据库";
 
-    return true;
+    bool isInit = true;
+    qDebug() << "begin load database";
+    if (! QrSqlHelper::makesureDbExist(QrFrameDb::getInstance())) {
+        isInit = false;
+        qWarning() << "fail to init database";
+    }
+    qDebug() << "end load database";
+    return isInit;
 }
 
 bool QrFramerPrivate::installLog()

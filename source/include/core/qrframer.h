@@ -49,7 +49,12 @@ public:
     void addSplashStep(const QrSplashStep& splashStep);
 
 public:
+    //  init logger and database
+    virtual bool init();
+    //  call init first
     virtual bool start();
+
+protected:
     virtual bool loadFramework();
     virtual bool initFramework();
 };
