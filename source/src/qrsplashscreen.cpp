@@ -38,6 +38,7 @@ void QrSplashScreenPrivate::init()
     progressBar = new QProgressBar(q);
     progressBar->setGeometry(0, q->pixmap().height()-50, q->pixmap().width(), 15);
     progressBar->setRange(0, 100);
+    progressBar->setAlignment(Qt::AlignCenter);
     progressBar->setValue(0);
 }
 
