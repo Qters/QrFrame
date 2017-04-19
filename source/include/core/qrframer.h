@@ -1,6 +1,8 @@
 ﻿#ifndef QRFRAME_H
 #define QRFRAME_H
 
+#include <functional>
+
 #include <QtGui/qcolor.h>
 
 #include "qrglobal.h"
@@ -18,14 +20,16 @@ class QrSplashStep;
  */
 class QRFRAMESHARED_EXPORT QrFramerConfig{
 public:
-    QrFramerConfig()
-    {}
+    QrFramerConfig();
 
     bool installLog = true;
 
     bool splashscreen = false;
     QString splashscreenBgQrcPath;
     QColor splashColor = Qt::white;
+
+    bool customServiceNames = false;
+    std::function<QVector<QString>()> customServiceNamesFunc;
 
     Qters::QrOrm::QrSqlDatabaseParams dbParams;
 };

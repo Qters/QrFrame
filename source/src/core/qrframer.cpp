@@ -139,6 +139,10 @@ bool QrFramer::loadFramework()
     getServicesStep.failMsg = "fail to get services";
     getServicesStep.function = [this](){
         Q_D(QrFramer);
+        if(d->frameConfig.customServiceNames) { //  自定义获取服务名称
+            d->serviceNames = d->frameConfig.customServiceNamesFunc();
+            return true;
+        }
         return d->getServices(d->serviceNames);
     };
     d->splashScreen->addStepFunction(getServicesStep);
@@ -362,3 +366,10 @@ bool QrFramerPrivate::initLogInfoByDatabase(bool *defaultUse,
 
     return true;
 }
+
+
+////////////////////////////////////////////
+
+QrFramerConfig::QrFramerConfig()
+    : customServiceNamesFunc([]{    return QVector<QString>();  })
+{}
